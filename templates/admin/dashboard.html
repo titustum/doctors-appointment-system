@@ -298,7 +298,7 @@
     </div>
 
     <!-- Add Doctor Modal -->
-    <div id="addDoctorModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden flex items-center justify-center">
+    <div id="addDoctorModal" class="fixed inset-0 bg-gray-900/60 hidden flex items-center justify-center">
         <div class="bg-white rounded-lg p-8 max-w-md w-full">
             <div class="flex justify-between items-center mb-6">
                 <h3 class="text-lg font-semibold text-gray-800">Add New Doctor</h3>
@@ -324,19 +324,19 @@
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="name">Full Name</label>
                     <input
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        class="shadow appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="name" name="name" type="text" placeholder="Dr. John Doe" required>
                 </div>
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Email</label>
                     <input
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        class="shadow appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="email" name="email" type="email" placeholder="john.doe@example.com" required>
                 </div>
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="department_id">Department</label>
                     <select
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        class="shadow appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="department_id" name="department_id" required>
                         <option value="">Select department</option>
                         {% for department in departments %}
@@ -347,13 +347,13 @@
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="work_hours">Work hours</label>
                     <input
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        class="shadow appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="work_hours" name="work_hours" type="text" placeholder="i.e. 7AM - 5PM" required>
                 </div>
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="rating">Rating</label>
                     <select
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        class="shadow appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="rating" name="rating" required>
                         <option value="">Select rating</option>
                         <option value="5">5/5 Stars (Best)</option>
@@ -374,7 +374,7 @@
     </div>
 
     <!-- Delete Doctor Confirmation Modal -->
-    <div id="deleteDoctorModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden flex items-center justify-center">
+    <div id="deleteDoctorModal" class="fixed inset-0 bg-gray-900/50 hidden flex items-center justify-center">
         <div class="bg-white rounded-lg p-8 max-w-md w-full">
             <div class="text-center mb-6">
                 <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100 mb-4">
