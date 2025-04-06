@@ -149,6 +149,10 @@ def about():
 # Simple route for the login page
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+
+    if 'user_id' in session:
+        return redirect(url_for('dashboard'))  # Redirect to dashboard if logged in
+
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
@@ -178,17 +182,13 @@ def logout():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    if 'user_id' in session:
+        return redirect(url_for('dashboard'))  # Redirect to dashboard if logged in
     if request.method == 'POST':
         # Get form data
         name = request.form['name']
         email = request.form['email']
-        password = request.form['password']
-        confirm_password = request.form['confirm_password']
-
-        # Basic validation
-        if password != confirm_password:
-            flash('Passwords do not match. Please try again.', 'danger')
-            return redirect(url_for('register'))
+        password = request.form['password'] 
 
         if len(password) < 8:
             flash('Password must be at least 8 characters long.', 'danger')
@@ -210,7 +210,7 @@ def register():
 
         # Flash success message and redirect to login
         flash('Registration successful! Please log in.', 'success')
-        return redirect(url_for('login'))
+        return redirect(url_for('dashboard'))
 
     return render_template('register.html')
 
@@ -262,9 +262,10 @@ def dashboard():
 @login_required
 def admin_view_appointments():
     doctor_id = request.args.get('doctor', None)
-    
+    selected_doctor = None
     if doctor_id:
         appointments = Appointment.query.filter_by(doctor_id=doctor_id).all()
+        selected_doctor = Doctor.query.get(doctor_id)
     else:
         appointments = Appointment.query.all()
     
@@ -272,10 +273,12 @@ def admin_view_appointments():
 
     user = User.query.get(session['user_id'])
     
+    
     return render_template('admin/appointments.html', 
                            appointments=appointments, 
                            doctors=doctors, 
                            selected_doctor_id=doctor_id,
+                           selected_doctor = selected_doctor,
                            user=user)
 
 

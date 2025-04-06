@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medical Dashboard</title>
+    <title>MedConnect Dashboard</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
@@ -18,7 +18,7 @@
         <!-- Sidebar -->
         <aside class="w-64 bg-blue-800 text-white hidden md:block print:hidden">
             <div class="p-6">
-                <h2 class="text-2xl font-bold">MedPortal</h2>
+                <h2 class="text-2xl font-bold"><i class="fas fa-user-md"></i> MedConnect</h2>
             </div>
             <nav class="mt-6">
                 <a href="{{ url_for('dashboard') }}" class="flex items-center py-3 px-6 hover:bg-blue-700">
@@ -75,7 +75,9 @@
                 <section class="admin-appointments py-16 bg-gray-50 print:bg-white">
                     <div class="container mx-auto px-4">
                         <div class="flex justify-between">
-                            <h2 class="text-3xl font-semibold text-gray-800 print:mb-6">Appointments</h2>
+                            <h2 class="text-3xl font-semibold text-gray-800 print:mb-6">{{ selected_doctor.name
+                                }}
+                                Appointments</h2>
                             <button onclick="window.print()"
                                 class="bg-blue-600 print:hidden text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300">
                                 Print Appointments
@@ -107,8 +109,9 @@
                                         <th class="py-3 px-4 text-left">ID</th>
                                         <th class="py-3 px-4 text-left">Doctor</th>
                                         <th class="py-3 px-4 text-left">Patient Name</th>
-                                        <th class="py-3 px-4 text-left">Date</th>
-                                        <th class="py-3 px-4 text-left">Time</th>
+                                        <th class="py-3 px-4 text-left">Booked Date</th>
+                                        <th class="py-3 px-4 text-left">Booked Time</th>
+                                        <th class="py-3 px-4 text-left">Type</th>
                                         <th class="py-3 px-4 text-left">Status</th>
                                         <th class="py-3 px-4 text-left print:hidden">Actions</th>
                                     </tr>
@@ -122,6 +125,7 @@
                                         <td class="py-2 px-4">{{ appointment.preferred_date.strftime('%B %d, %Y') }}
                                         </td>
                                         <td class="py-2 px-4">{{ appointment.preferred_time.capitalize() }}</td>
+                                        <td class="py-2 px-4">{{ appointment.visit_type }}</td>
                                         <td class="py-2 px-4">{{ appointment.status }}</td>
                                         <td class="py-2 px-4 print:hidden">
                                             <a href="#" class="text-blue-600 hover:underline">View</a>
