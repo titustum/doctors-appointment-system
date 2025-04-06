@@ -59,6 +59,8 @@ def book_appointment(doctor_id):
         date = request.form.get('date')
         time = request.form.get('time')
         message = request.form.get('message')
+        dob  = request.form.get('dob')
+        visit_type  = request.form.get('visit_type')
 
         # Create a new appointment instance
         appointment = Appointment(
@@ -66,10 +68,11 @@ def book_appointment(doctor_id):
             patient_name=name,
             patient_email=email,
             patient_phone=phone,
-            patient_dob=datetime.strptime(request.form.get('dob'), '%Y-%m-%d'),  # Optional, if included in form
+            patient_dob=datetime.strptime(dob, '%Y-%m-%d'),
             preferred_date=datetime.strptime(date, '%Y-%m-%d'),
             preferred_time=time,
             issue_description=message,
+            visit_type=visit_type,
             status='Scheduled'  # Default status
         )
 
@@ -77,11 +80,11 @@ def book_appointment(doctor_id):
         try:
             db.session.add(appointment)
             db.session.commit()
-            flash("Appointment successfully booked!", 'success')
+            flash("Appointment successfully booked!", 'green')
             return redirect(url_for('appointment_confirmation', appointment_id=appointment.id))  # Redirect to confirmation page
         except Exception as e:
             db.session.rollback()
-            flash(f"An error occurred while booking the appointment: {e}", 'danger')
+            flash(f"An error occurred while booking the appointment: {e}", 'red')
     doctor.rating = round(random() * 10, 1)
     return render_template('book_appointment.html', doctor=doctor)
 
@@ -202,13 +205,28 @@ def dashboard():
     upcoming_appointments_list = Appointment.query.filter(Appointment.preferred_time > datetime.now(), Appointment.status == "Scheduled").all()
 
     # Render the dashboard template and pass the data
-    return render_template('dashboard.html', 
+    return render_template('admin/dashboard.html', 
                            total_appointments=total_appointments,
                            upcoming_appointments=upcoming_appointments,
                            total_doctors=total_doctors,
                            upcoming_appointments_list=upcoming_appointments_list,
                            departments = departments
                            )
+
+
+
+@app.route('/admin/appointments')
+def admin_view_appointments():
+    doctor_id = request.args.get('doctor', None)
+    
+    if doctor_id:
+        appointments = Appointment.query.filter_by(doctor_id=doctor_id).all()
+    else:
+        appointments = Appointment.query.all()
+    
+    doctors = Doctor.query.all()
+    
+    return render_template('admin/appointments.html', appointments=appointments, doctors=doctors, selected_doctor_id=doctor_id)
 
 
 
