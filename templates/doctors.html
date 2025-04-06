@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %} Doctors - MediConnect {% endblock %}
+
+{% block content %}
+
+
+<section class="doctors-section py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <!-- Section Header -->
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Our Specialist Doctors</h2>
+            <p class="text-lg text-gray-600 max-w-3xl mx-auto">Meet our team of experienced healthcare professionals
+                dedicated to providing you with the highest quality care.</p>
+            <div class="mt-6 inline-flex flex-wrap justify-center gap-2">
+                <button class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">All
+                    Specialists</button>
+                <button
+                    class="bg-white text-gray-700 px-4 py-2 rounded-md hover:bg-gray-100 transition border border-gray-200">Cardiology</button>
+                <button
+                    class="bg-white text-gray-700 px-4 py-2 rounded-md hover:bg-gray-100 transition border border-gray-200">Neurology</button>
+                <button
+                    class="bg-white text-gray-700 px-4 py-2 rounded-md hover:bg-gray-100 transition border border-gray-200">Pediatrics</button>
+                <button
+                    class="bg-white text-gray-700 px-4 py-2 rounded-md hover:bg-gray-100 transition border border-gray-200">Orthopedics</button>
+            </div>
+        </div>
+
+        <!-- Doctors Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+
+            {% for doctor in doctors %}
+            <!-- Doctor Card 1 -->
+            <div
+                class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:shadow-lg hover:-translate-y-1">
+                <div class="relative">
+                    <img src="{{ url_for('static', filename='uploads/'+doctor.image_url) }}" alt="Dr. Sarah Johnson"
+                        class="w-full h-64 object-cover object-center">
+                    <div class="absolute top-4 right-4 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">
+                        {{ doctor.department.name }}</div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold text-gray-800">{{ doctor.name }}</h3>
+                    <p class="text-gray-600 mb-3">{{ doctor.department.name }}</p>
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span class="text-gray-600 text-sm ml-2">{{ doctor.rating }}.8 (124 reviews)</span>
+                    </div>
+                    <div class="flex items-center text-sm text-gray-600 mb-4">
+                        <i class="far fa-calendar-alt mr-2"></i>
+                        <span>Available: {{ doctor.work_hours }}</span>
+                    </div>
+                    <button
+                        class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition flex items-center justify-center gap-2">
+                        <i class="fas fa-calendar-check"></i> Book Appointment
+                    </button>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+
+        <!-- View All Docto
+          Button -->
+        <div class="text-center mt-12">
+            <a href="{{ url_for('doctors') }}"
+                class="inline-flex items-center justify-center gap-2 bg-white border border-gray-300 text-gray-700 px-6 py-3 rounded-md hover:bg-gray-50 transition">
+                View All Doctors <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

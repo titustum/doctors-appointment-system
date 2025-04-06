@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Online Doctor Appointment System</title>
+    <meta name="description" content="Book appointments with doctors online" />
+    <meta name="author" content="Lovable" />
+    <meta property="og:image" content="/og-image.png" />
+    <!-- <link href="{{ url_for('static', filename='css/tailwind.css') }}" rel="stylesheet"> -->
+    <!-- FontAwesome Pro -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+</head>
+
+<body class="bg-gray-100 font-[Inter]">
+
+    <!-- Header Section -->
+    <header class="bg-blue-600 sticky top-0 z-50 shadow-md">
+        <div class="container mx-auto px-4">
+            <nav class="flex justify-between items-center py-3">
+                <!-- Logo -->
+                <a href="{{ url_for('index') }}" class="flex items-center gap-2 text-2xl font-bold text-white">
+                    <i class="fas fa-user-md"></i> MediConnect
+                </a>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden lg:flex items-center gap-8">
+                    <div class="flex gap-6">
+                        <a href="{{ url_for('index') }}"
+                            class="text-white hover:text-blue-100 font-medium py-2 border-b-2 border-transparent hover:border-white transition-all">Home</a>
+
+                        <!-- Doctors Dropdown -->
+                        <div class="relative group">
+                            <button
+                                class="text-white hover:text-blue-100 font-medium py-2 border-b-2 border-transparent group-hover:border-white transition-all flex items-center gap-1">
+                                Doctors <i class="fas fa-chevron-down text-xs ml-1"></i>
+                            </button>
+                            <div
+                                class="absolute left-0 top-full w-56 bg-white shadow-lg rounded-b-lg invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all">
+                                <a href="{{ url_for('doctors') }}"
+                                    class="block px-4 py-3 text-gray-700 hover:bg-blue-50 border-l-2 border-transparent hover:border-blue-600">All
+                                    Doctors</a>
+                                <a href="{{ url_for('doctors') }}"
+                                    class="block px-4 py-3 text-gray-700 hover:bg-blue-50 border-l-2 border-transparent hover:border-blue-600">Cardiologists</a>
+                                <a href="{{ url_for('doctors') }}"
+                                    class="block px-4 py-3 text-gray-700 hover:bg-blue-50 border-l-2 border-transparent hover:border-blue-600">Neurologists</a>
+                                <a href="{{ url_for('doctors') }}"
+                                    class="block px-4 py-3 text-gray-700 hover:bg-blue-50 border-l-2 border-transparent hover:border-blue-600">Pediatricians</a>
+                                <a href="{{ url_for('doctors') }}"
+                                    class="block px-4 py-3 text-gray-700 hover:bg-blue-50 border-l-2 border-transparent hover:border-blue-600">Orthopedic
+                                    Surgeons</a>
+                            </div>
+                        </div>
+
+                        <!-- Services Dropdown -->
+                        <div class="relative group">
+                            <button
+                                class="text-white hover:text-blue-100 font-medium py-2 border-b-2 border-transparent group-hover:border-white transition-all flex items-center gap-1">
+                                Services <i class="fas fa-chevron-down text-xs ml-1"></i>
+                            </button>
+                            <div
+                                class="absolute left-0 top-full w-56 bg-white shadow-lg rounded-b-lg invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all">
+                                <a href="{{ url_for('services') }}"
+                                    class="block px-4 py-3 text-gray-700 hover:bg-blue-50 border-l-2 border-transparent hover:border-blue-600">All
+                                    Services</a>
+                                <a href="{{ url_for('services',) }}"
+                                    class="block px-4 py-3 text-gray-700 hover:bg-blue-50 border-l-2 border-transparent hover:border-blue-600">Cardiology</a>
+                                <a href="{{ url_for('services') }}"
+                                    class="block px-4 py-3 text-gray-700 hover:bg-blue-50 border-l-2 border-transparent hover:border-blue-600">Neurology</a>
+                                <a href="{{ url_for('services') }}"
+                                    class="block px-4 py-3 text-gray-700 hover:bg-blue-50 border-l-2 border-transparent hover:border-blue-600">Pediatrics</a>
+                                <a href="{{ url_for('services') }}"
+                                    class="block px-4 py-3 text-gray-700 hover:bg-blue-50 border-l-2 border-transparent hover:border-blue-600">Orthopedics</a>
+                            </div>
+                        </div>
+
+                        <a href="{{ url_for('about') }}"
+                            class="text-white hover:text-blue-100 font-medium py-2 border-b-2 border-transparent hover:border-white transition-all">About</a>
+                        <a href="{{ url_for('contact') }}"
+                            class="text-white hover:text-blue-100 font-medium py-2 border-b-2 border-transparent hover:border-white transition-all">Contact</a>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex items-center gap-3">
+                        <a href="{{ url_for('book_appointment') }}"
+                            class="bg-white text-blue-600 hover:bg-blue-50 px-4 py-2 rounded-md font-medium transition">Book
+                            Now</a>
+                        <a href="{{ url_for('login') }}"
+                            class="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-md font-medium transition flex items-center gap-2">
+                            <i class="fas fa-user"></i> Login
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="lg:hidden flex items-center">
+                    <button class="text-white p-2" id="menuButton" aria-label="Open menu">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="fixed inset-0 bg-black/70 z-40 hidden transition-opacity duration-300" id="mobileMenuOverlay"></div>
+
+    <!-- Mobile Menu Sidebar -->
+    <div class="fixed top-0 right-0 h-full w-4/5 max-w-sm bg-white z-50 shadow-xl transform translate-x-full transition-transform duration-300 ease-in-out"
+        id="mobileMenu">
+        <div class="flex justify-between items-center p-4 border-b">
+            <a href="{{ url_for('index') }}" class="flex items-center gap-2 text-xl font-bold text-blue-600">
+                <i class="fas fa-user-md"></i> MediConnect
+            </a>
+            <button id="closeMenu" class="text-gray-500 hover:text-gray-700 p-1" aria-label="Close menu">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+
+        <nav class="py-4">
+            <!-- Mobile Navigation Links -->
+            <a href="{{ url_for('index') }}"
+                class="flex items-center px-6 py-3 text-gray-700 hover:bg-blue-50 border-l-4 border-transparent hover:border-blue-600">
+                <i class="fas fa-home w-6"></i> <span class="ml-2">Home</span>
+            </a>
+
+            <!-- Mobile Doctors Submenu -->
+            <div class="mobile-submenu">
+                <button
+                    class="flex items-center justify-between w-full px-6 py-3 text-gray-700 hover:bg-blue-50 border-l-4 border-transparent hover:border-blue-600">
+                    <div class="flex items-center">
+                        <i class="fas fa-user-md w-6"></i> <span class="ml-2">Doctors</span>
+                    </div>
+                    <i class="fas fa-chevron-down text-xs"></i>
+                </button>
+                <div class="hidden pl-12 bg-gray-50">
+                    <a href="{{ url_for('doctors') }}" class="block py-3 px-4 text-gray-600 hover:text-blue-600">All
+                        Doctors</a>
+                    <a href="{{ url_for('doctors') }}"
+                        class="block py-3 px-4 text-gray-600 hover:text-blue-600">Cardiologists</a>
+                    <a href="{{ url_for('doctors') }}"
+                        class="block py-3 px-4 text-gray-600 hover:text-blue-600">Neurologists</a>
+                    <a href="{{ url_for('doctors') }}"
+                        class="block py-3 px-4 text-gray-600 hover:text-blue-600">Pediatricians</a>
+                    <a href="{{ url_for('doctors') }}"
+                        class="block py-3 px-4 text-gray-600 hover:text-blue-600">Orthopedic Surgeons</a>
+                </div>
+            </div>
+
+            <!-- Mobile Services Submenu -->
+            <div class="mobile-submenu">
+                <button
+                    class="flex items-center justify-between w-full px-6 py-3 text-gray-700 hover:bg-blue-50 border-l-4 border-transparent hover:border-blue-600">
+                    <div class="flex items-center">
+                        <i class="fas fa-stethoscope w-6"></i> <span class="ml-2">Services</span>
+                    </div>
+                    <i class="fas fa-chevron-down text-xs"></i>
+                </button>
+                <div class="hidden pl-12 bg-gray-50">
+                    <a href="{{ url_for('services') }}" class="block py-3 px-4 text-gray-600 hover:text-blue-600">All
+                        Services</a>
+                    <a href="{{ url_for('services') }}"
+                        class="block py-3 px-4 text-gray-600 hover:text-blue-600">Cardiology</a>
+                    <a href="{{ url_for('services') }}"
+                        class="block py-3 px-4 text-gray-600 hover:text-blue-600">Neurology</a>
+                    <a href="{{ url_for('services') }}"
+                        class="block py-3 px-4 text-gray-600 hover:text-blue-600">Pediatrics</a>
+                    <a href="{{ url_for('services') }}"
+                        class="block py-3 px-4 text-gray-600 hover:text-blue-600">Orthopedics</a>
+                </div>
+            </div>
+
+            <a href="{{ url_for('about') }}"
+                class="flex items-center px-6 py-3 text-gray-700 hover:bg-blue-50 border-l-4 border-transparent hover:border-blue-600">
+                <i class="fas fa-info-circle w-6"></i> <span class="ml-2">About</span>
+            </a>
+            <a href="{{ url_for('contact') }}"
+                class="flex items-center px-6 py-3 text-gray-700 hover:bg-blue-50 border-l-4 border-transparent hover:border-blue-600">
+                <i class="fas fa-envelope w-6"></i> <span class="ml-2">Contact</span>
+            </a>
+
+            <div class="border-t my-4"></div>
+
+            <!-- Mobile Action Buttons -->
+            <div class="px-6 mt-4 space-y-3">
+                <a href="{{ url_for('book_appointment') }}"
+                    class="block bg-blue-600 text-white text-center px-4 py-3 rounded-md font-medium hover:bg-blue-700 transition">
+                    Book an Appointment
+                </a>
+                <a href="{{ url_for('login') }}"
+                    class="block bg-gray-100 text-gray-700 text-center px-4 py-3 rounded-md font-medium hover:bg-gray-200 transition">
+                    <i class="fas fa-user mr-2"></i> Login / Register
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}
+        <!-- Content from child templates will be inserted here -->
+        {% endblock %}
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-900 text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <!-- About Column -->
+                <div>
+                    <a href="{{ url_for('index') }}" class="flex items-center gap-2 text-2xl font-bold text-white mb-4">
+                        <i class="fas fa-user-md"></i> MediConnect
+                    </a>
+                    <p class="text-gray-400 mb-4">Providing quality healthcare services with a patient-centered approach
+                        since 2010.</p>
+                    <div class="flex gap-4 mt-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition" aria-label="Facebook">
+                            <i class="fab fa-facebook-f text-lg"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition" aria-label="Twitter">
+                            <i class="fab fa-twitter text-lg"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition" aria-label="Instagram">
+                            <i class="fab fa-instagram text-lg"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in text-lg"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links Column -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4 pb-2 border-b border-gray-700">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="{{ url_for('index') }}"
+                                class="text-gray-400 hover:text-white transition flex items-center gap-2"><i
+                                    class="fas fa-chevron-right text-xs"></i> Home</a></li>
+                        <li><a href="{{ url_for('about') }}"
+                                class="text-gray-400 hover:text-white transition flex items-center gap-2"><i
+                                    class="fas fa-chevron-right text-xs"></i> About Us</a></li>
+                        <li><a href="{{ url_for('services') }}"
+                                class="text-gray-400 hover:text-white transition flex items-center gap-2"><i
+                                    class="fas fa-chevron-right text-xs"></i> Our Services</a></li>
+                        <li><a href="{{ url_for('doctors') }}"
+                                class="text-gray-400 hover:text-white transition flex items-center gap-2"><i
+                                    class="fas fa-chevron-right text-xs"></i> Our Doctors</a></li>
+                        <li><a href="{{ url_for('contact') }}"
+                                class="text-gray-400 hover:text-white transition flex items-center gap-2"><i
+                                    class="fas fa-chevron-right text-xs"></i> Contact Us</a></li>
+                        <li><a href="{{ url_for('book_appointment') }}"
+                                class="text-gray-400 hover:text-white transition flex items-center gap-2"><i
+                                    class="fas fa-chevron-right text-xs"></i> Book Appointment</a></li>
+                    </ul>
+                </div>
+
+                <!-- Services Column -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4 pb-2 border-b border-gray-700">Our Services</h3>
+                    <ul class="space-y-2">
+                        <li><a href="{{ url_for('services') }}"
+                                class="text-gray-400 hover:text-white transition flex items-center gap-2"><i
+                                    class="fas fa-heartbeat text-xs"></i> Cardiology</a></li>
+                        <li><a href="{{ url_for('services') }}"
+                                class="text-gray-400 hover:text-white transition flex items-center gap-2"><i
+                                    class="fas fa-brain text-xs"></i> Neurology</a></li>
+                        <li><a href="{{ url_for('services') }}"
+                                class="text-gray-400 hover:text-white transition flex items-center gap-2"><i
+                                    class="fas fa-child text-xs"></i> Pediatrics</a></li>
+                        <li><a href="{{ url_for('services') }}"
+                                class="text-gray-400 hover:text-white transition flex items-center gap-2"><i
+                                    class="fas fa-bone text-xs"></i> Orthopedics</a></li>
+                        <li><a href="{{ url_for('services') }}"
+                                class="text-gray-400 hover:text-white transition flex items-center gap-2"><i
+                                    class="fas fa-procedures text-xs"></i> General Surgery</a></li>
+                        <li><a href="{{ url_for('services') }}"
+                                class="text-gray-400 hover:text-white transition flex items-center gap-2"><i
+                                    class="fas fa-shield-alt text-xs"></i> Preventive Care</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Column -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4 pb-2 border-b border-gray-700">Contact Information</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-map-marker-alt mt-1 text-blue-400"></i>
+                            <span class="text-gray-400">123 Medical Center Drive<br>New York, NY 10001</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-phone-alt text-blue-400"></i>
+                            <span class="text-gray-400">+1 (555) 123-4567</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-envelope text-blue-400"></i>
+                            <span class="text-gray-400">info@mediconnect.com</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-clock text-blue-400"></i>
+                            <span class="text-gray-400">Mon-Fri: 8:00 AM - 6:00 PM<br>Sat: 9:00 AM - 1:00 PM</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Newsletter Subscribe -->
+            <div class="border-t border-gray-800 pt-8 pb-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h4 class="text-lg font-medium mb-2">Subscribe to Our Newsletter</h4>
+                        <p class="text-gray-400">Stay updated with our latest health tips and news.</p>
+                    </div>
+                    <div>
+                        <form class="flex flex-col sm:flex-row gap-2">
+                            <input type="email" placeholder="Your Email Address" required
+                                class="bg-gray-800 border border-gray-700 text-white py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 flex-grow">
+                            <button type="submit"
+                                class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-md transition">Subscribe</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copyright Bar -->
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 MediConnect. All rights reserved.</p>
+                <div class="flex flex-wrap justify-center gap-6 mt-4">
+                    <a href="#" class="hover:text-white transition">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition">Terms of Service</a>
+                    <a href="#" class="hover:text-white transition">FAQ</a>
+                    <a href="#" class="hover:text-white transition">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Mobile Menu -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const menuButton = document.getElementById('menuButton');
+            const closeMenu = document.getElementById('closeMenu');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+            const mobileSubmenuButtons = document.querySelectorAll('.mobile-submenu button');
+
+            // Open mobile menu
+            menuButton.addEventListener('click', function () {
+                mobileMenu.classList.remove('translate-x-full');
+                mobileMenuOverlay.classList.remove('hidden');
+                document.body.classList.add('overflow-hidden');
+            });
+
+            // Close mobile menu
+            function closeMenuHandler() {
+                mobileMenu.classList.add('translate-x-full');
+                mobileMenuOverlay.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            }
+
+            closeMenu.addEventListener('click', closeMenuHandler);
+            mobileMenuOverlay.addEventListener('click', closeMenuHandler);
+
+            // Toggle submenu
+            mobileSubmenuButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const submenu = this.nextElementSibling;
+                    const icon = this.querySelector('.fa-chevron-down');
+
+                    submenu.classList.toggle('hidden');
+                    icon.classList.toggle('fa-chevron-down');
+                    icon.classList.toggle('fa-chevron-up');
+                });
+            });
+        });
+    </script>
+
+</body>
+
+</html>

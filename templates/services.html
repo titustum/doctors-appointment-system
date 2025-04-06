@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Our Services - MediConnect{% endblock %}
+
+{% block content %}
+<section class="services py-20 bg-gray-50 px-4">
+    <div class="container mx-auto text-center max-w-6xl">
+        <h2 class="text-3xl font-semibold text-primary-color mb-16">Our Medical Services</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Service Card 1 -->
+            <div class="service-card p-6 shadow-lg rounded-lg text-center hover:shadow-xl transition duration-300">
+                <div class="service-icon text-5xl text-primary-color mb-4">
+                    <i class="fas fa-stethoscope"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Find Doctors</h3>
+                <p>Browse through our network of experienced and qualified doctors across various specialties.</p>
+            </div>
+
+            <!-- Service Card 2 -->
+            <div class="service-card p-6 shadow-lg rounded-lg text-center hover:shadow-xl transition duration-300">
+                <div class="service-icon text-5xl text-primary-color mb-4">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Book Appointments</h3>
+                <p>Schedule appointments online at your convenience without waiting in queues.</p>
+            </div>
+
+            <!-- Service Card 3 -->
+            <div class="service-card p-6 shadow-lg rounded-lg text-center hover:shadow-xl transition duration-300">
+                <div class="service-icon text-5xl text-primary-color mb-4">
+                    <i class="fas fa-home"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Virtual Consultations</h3>
+                <p>Consult with doctors remotely from the comfort of your home via video calls.</p>
+            </div>
+
+            <!-- Service Card 4 -->
+            <div class="service-card p-6 shadow-lg rounded-lg text-center hover:shadow-xl transition duration-300">
+                <div class="service-icon text-5xl text-primary-color mb-4">
+                    <i class="fas fa-prescription-bottle-alt"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Medication Delivery</h3>
+                <p>Order your prescribed medications online and have them delivered to your doorstep.</p>
+            </div>
+
+            <!-- Service Card 5 -->
+            <div class="service-card p-6 shadow-lg rounded-lg text-center hover:shadow-xl transition duration-300">
+                <div class="service-icon text-5xl text-primary-color mb-4">
+                    <i class="fas fa-heartbeat"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Health Checkups</h3>
+                <p>Book comprehensive health checkups with a range of packages to choose from.</p>
+            </div>
+
+            <!-- Service Card 6 -->
+            <div class="service-card p-6 shadow-lg rounded-lg text-center hover:shadow-xl transition duration-300">
+                <div class="service-icon text-5xl text-primary-color mb-4">
+                    <i class="fas fa-ambulance"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Emergency Services</h3>
+                <p>Access emergency medical services quickly with our 24/7 available team of experts.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

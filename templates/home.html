@@ -1,0 +1,391 @@
+{% extends "base.html" %}
+
+{% block title %}Home - MediConnect{% endblock %}
+
+{% block content %}
+
+<section class="hero relative bg-blue-50 h-auto min-h-[90vh] flex items-center overflow-hidden">
+    <!-- Background Image of a Doctor -->
+    <div class="absolute inset-0 bg-cover bg-center"
+        style="background-image: url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
+    </div>
+
+    <!-- Overlay to make the text stand out -->
+    <div class="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-black/40"></div>
+
+    <!-- Content Section -->
+    <div class="container mx-auto px-4 py-16 relative z-10 grid md:grid-cols-2 gap-8 items-center">
+        <!-- Text Content -->
+        <div class="text-white text-left md:pr-8">
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-semibold mb-4 leading-tight">Your Health, <span
+                    class="text-blue-400">Our Priority</span></h1>
+            <p class="text-lg mb-6 text-gray-200">Connect with top healthcare professionals and book appointments
+                online with our easy-to-use platform. Quality healthcare is just a click away.</p>
+            <div class="flex flex-wrap gap-4 mt-8">
+                <a href="{{ url_for('book_appointment') }}"
+                    class="bg-blue-600 inline-block text-white py-3 px-8 rounded-md text-lg hover:bg-blue-700 transition duration-300 flex items-center justify-center gap-2">
+                    <i class="fas fa-calendar-check"></i> Book an Appointment
+                </a>
+                <a href="{{ url_for('services') }}"
+                    class="border border-white text-white py-3 px-8 rounded-md text-lg hover:bg-white hover:text-blue-900 transition duration-300 flex items-center justify-center gap-2">
+                    <i class="fas fa-stethoscope"></i> Our Services
+                </a>
+            </div>
+
+            <!-- Trust Indicators -->
+            <div class="mt-10 grid grid-cols-3 gap-4">
+                <div class="text-center">
+                    <div class="text-3xl text-blue-400 font-bold">5000+</div>
+                    <div class="text-sm text-gray-300">Patients Served</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl text-blue-400 font-bold">50+</div>
+                    <div class="text-sm text-gray-300">Specialists</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl text-blue-400 font-bold">4.9</div>
+                    <div class="text-sm text-gray-300">Patient Rating</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Appointment Form -->
+        <div class="bg-white rounded-lg shadow-xl p-6 md:ml-auto max-w-md w-full">
+            <h3 class="text-2xl font-semibold text-gray-800 mb-4">Book Your Appointment</h3>
+            <form action="{{ url_for('book_appointment') }}" method="POST" class="space-y-4">
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                    <input type="text" id="name" name="name" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                </div>
+
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                    <input type="email" id="email" name="email" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                </div>
+
+                <div>
+                    <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                </div>
+
+                <div>
+                    <label for="department" class="block text-sm font-medium text-gray-700 mb-1">Department</label>
+                    <select id="department" name="department" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <option value="">Select Department</option>
+                        <option value="general">General Medicine</option>
+                        <option value="cardiology">Cardiology</option>
+                        <option value="neurology">Neurology</option>
+                        <option value="pediatrics">Pediatrics</option>
+                        <option value="orthopedics">Orthopedics</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="date" class="block text-sm font-medium text-gray-700 mb-1">Preferred Date</label>
+                    <input type="date" id="date" name="date" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                </div>
+
+                <div>
+                    <label for="time" class="block text-sm font-medium text-gray-700 mb-1">Preferred Time</label>
+                    <select id="time" name="time" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <option value="">Select Time</option>
+                        <option value="morning">Morning (9AM - 12PM)</option>
+                        <option value="afternoon">Afternoon (1PM - 5PM)</option>
+                        <option value="evening">Evening (6PM - 8PM)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Brief Description of Issue
+                        (Optional)</label>
+                    <textarea id="message" name="message" rows="3"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                </div>
+
+                <button type="submit"
+                    class="w-full bg-blue-600 text-white py-3 px-6 rounded-md hover:bg-blue-700 transition duration-300 flex items-center justify-center gap-2 font-medium">
+                    <i class="fas fa-calendar-check"></i> Confirm Appointment
+                </button>
+
+                <p class="text-xs text-gray-500 text-center mt-2">By booking an appointment, you agree to our <a
+                        href="#" class="text-blue-600 hover:underline">Terms of Service</a> and <a href="#"
+                        class="text-blue-600 hover:underline">Privacy Policy</a>.</p>
+            </form>
+        </div>
+    </div>
+</section>
+
+
+<section class="doctors-section py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <!-- Section Header -->
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Our Specialist Doctors</h2>
+            <p class="text-lg text-gray-600 max-w-3xl mx-auto">Meet our team of experienced healthcare professionals
+                dedicated to providing you with the highest quality care.</p>
+            <div class="mt-6 inline-flex flex-wrap justify-center gap-2">
+                <button class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">All
+                    Specialists</button>
+                <button
+                    class="bg-white text-gray-700 px-4 py-2 rounded-md hover:bg-gray-100 transition border border-gray-200">Cardiology</button>
+                <button
+                    class="bg-white text-gray-700 px-4 py-2 rounded-md hover:bg-gray-100 transition border border-gray-200">Neurology</button>
+                <button
+                    class="bg-white text-gray-700 px-4 py-2 rounded-md hover:bg-gray-100 transition border border-gray-200">Pediatrics</button>
+                <button
+                    class="bg-white text-gray-700 px-4 py-2 rounded-md hover:bg-gray-100 transition border border-gray-200">Orthopedics</button>
+            </div>
+        </div>
+
+        <!-- Doctors Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+
+            {% for doctor in doctors %}
+            <!-- Doctor Card 1 -->
+            <div
+                class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:shadow-lg hover:-translate-y-1">
+                <div class="relative">
+                    <img src="{{ url_for('static', filename='uploads/'+doctor.image_url) }}" alt="Dr. Sarah Johnson"
+                        class="w-full h-64 object-cover object-center">
+                    <div class="absolute top-4 right-4 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">
+                        {{ doctor.department.name }}</div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold text-gray-800">{{ doctor.name }}</h3>
+                    <p class="text-gray-600 mb-3">{{ doctor.department.name }}</p>
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span class="text-gray-600 text-sm ml-2">{{ doctor.rating }}.8 (124 reviews)</span>
+                    </div>
+                    <div class="flex items-center text-sm text-gray-600 mb-4">
+                        <i class="far fa-calendar-alt mr-2"></i>
+                        <span>Available: {{ doctor.work_hours }}</span>
+                    </div>
+                    <button
+                        class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition flex items-center justify-center gap-2">
+                        <i class="fas fa-calendar-check"></i> Book Appointment
+                    </button>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+
+        <!-- View All Doctors Button -->
+        <div class="text-center mt-12">
+            <a href="{{ url_for('doctors') }}"
+                class="inline-flex items-center justify-center gap-2 bg-white border border-gray-300 text-gray-700 px-6 py-3 rounded-md hover:bg-gray-50 transition">
+                View All Doctors <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+
+
+
+<section class="services-section py-16 bg-white">
+    <div class="container mx-auto px-4">
+        <!-- Section Header -->
+        <div class="text-center mb-12">
+            <span class="text-blue-600 font-medium">Our Medical Services</span>
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mt-2 mb-4">Comprehensive Healthcare Solutions</h2>
+            <p class="text-lg text-gray-600 max-w-3xl mx-auto">We provide a wide range of medical services to meet your
+                healthcare needs with state-of-the-art facilities and expert care.</p>
+        </div>
+
+        <!-- Services Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Service Card 1 -->
+            <div
+                class="bg-gray-50 rounded-lg p-8 transition-all hover:shadow-lg hover:bg-blue-50 border border-gray-100">
+                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6">
+                    <i class="fas fa-heartbeat text-2xl text-blue-600"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-3">Cardiology</h3>
+                <p class="text-gray-600 mb-4">Comprehensive diagnosis and treatment of heart conditions including ECG,
+                    stress tests, and heart disease management.</p>
+                <ul class="space-y-2 mb-6">
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span class="text-gray-700">Heart disease screening</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span class="text-gray-700">Echocardiography</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span class="text-gray-700">Cardiac rehabilitation</span>
+                    </li>
+                </ul>
+                <a href="#" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium">
+                    Learn More <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+
+            <!-- Service Card 2 -->
+            <div
+                class="bg-gray-50 rounded-lg p-8 transition-all hover:shadow-lg hover:bg-blue-50 border border-gray-100">
+                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-6">
+                    <i class="fas fa-brain text-2xl text-green-600"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-3">Neurology</h3>
+                <p class="text-gray-600 mb-4">Specialized care for disorders of the nervous system, including the brain,
+                    spinal cord, and peripheral nerves.</p>
+                <ul class="space-y-2 mb-6">
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span class="text-gray-700">Neurological examinations</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span class="text-gray-700">EEG studies</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span class="text-gray-700">Migraine treatment</span>
+                    </li>
+                </ul>
+                <a href="#" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium">
+                    Learn More <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+
+            <!-- Service Card 3 -->
+            <div
+                class="bg-gray-50 rounded-lg p-8 transition-all hover:shadow-lg hover:bg-blue-50 border border-gray-100">
+                <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mb-6">
+                    <i class="fas fa-child text-2xl text-purple-600"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-3">Pediatrics</h3>
+                <p class="text-gray-600 mb-4">Complete healthcare for infants, children, and adolescents, focusing on
+                    growth, development, and preventive care.</p>
+                <ul class="space-y-2 mb-6">
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span class="text-gray-700">Well-child visits</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span class="text-gray-700">Immunizations</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span class="text-gray-700">Developmental assessments</span>
+                    </li>
+                </ul>
+                <a href="#" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium">
+                    Learn More <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+
+            <!-- Service Card 4 -->
+            <div
+                class="bg-gray-50 rounded-lg p-8 transition-all hover:shadow-lg hover:bg-blue-50 border border-gray-100">
+                <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mb-6">
+                    <i class="fas fa-bone text-2xl text-orange-600"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-3">Orthopedics</h3>
+                <p class="text-gray-600 mb-4">Diagnosis and treatment of musculoskeletal conditions affecting bones,
+                    joints, muscles, ligaments, and tendons.</p>
+                <ul class="space-y-2 mb-6">
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span class="text-gray-700">Joint replacement</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span class="text-gray-700">Sports injury treatment</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span class="text-gray-700">Physical therapy</span>
+                    </li>
+                </ul>
+                <a href="#" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium">
+                    Learn More <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+
+            <!-- Service Card 5 -->
+            <div
+                class="bg-gray-50 rounded-lg p-8 transition-all hover:shadow-lg hover:bg-blue-50 border border-gray-100">
+                <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-6">
+                    <i class="fas fa-procedures text-2xl text-red-600"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-3">General Surgery</h3>
+                <p class="text-gray-600 mb-4">Surgical procedures for a wide range of conditions performed by highly
+                    skilled surgeons using advanced techniques.</p>
+                <ul class="space-y-2 mb-6">
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span class="text-gray-700">Minimally invasive surgery</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span class="text-gray-700">Hernia repair</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span class="text-gray-700">Gallbladder removal</span>
+                    </li>
+                </ul>
+                <a href="#" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium">
+                    Learn More <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+
+            <!-- Service Card 6 -->
+            <div
+                class="bg-gray-50 rounded-lg p-8 transition-all hover:shadow-lg hover:bg-blue-50 border border-gray-100">
+                <div class="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mb-6">
+                    <i class="fas fa-stethoscope text-2xl text-teal-600"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-3">Preventive Care</h3>
+                <p class="text-gray-600 mb-4">Comprehensive health screenings and preventive services to help maintain
+                    your health and detect issues early.</p>
+                <ul class="space-y-2 mb-6">
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span class="text-gray-700">Annual physicals</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span class="text-gray-700">Cancer screenings</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span class="text-gray-700">Lifestyle consultations</span>
+                    </li>
+                </ul>
+                <a href="#" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium">
+                    Learn More <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- All Services Button -->
+        <div class="text-center mt-12">
+            <a href="{{ url_for('services') }}"
+                class="inline-block bg-blue-600 text-white py-3 px-8 rounded-md hover:bg-blue-700 transition duration-300 flex items-center justify-center gap-2 mx-auto">
+                <i class="fas fa-plus-circle"></i> View All Services
+            </a>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}About Us - MediConnect{% endblock %}
+
+{% block content %}
+<!-- About Section -->
+<section class="about py-20 bg-gray-50">
+    <div class="container mx-auto text-center">
+        <h2 class="text-3xl font-semibold text-primary-color mb-16">About MediConnect</h2>
+        <p class="text-lg text-gray-600 max-w-4xl mx-auto mb-12">
+            MediConnect is a revolutionary platform created as part of a capstone project to address the increasing need
+            for efficient and accessible healthcare services. Developed by a team of dedicated individuals, this online
+            doctor appointment system streamlines the process of booking, managing, and rescheduling appointments,
+            benefiting both patients and healthcare providers.
+        </p>
+
+        <!-- Mission Section -->
+        <div class="mb-16">
+            <h3 class="text-2xl font-semibold text-primary-color mb-4">Our Mission</h3>
+            <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                The mission of MediConnect is to create a user-friendly, secure, and efficient platform that simplifies
+                the appointment booking process for both patients and doctors. Our goal is to provide a seamless
+                experience where patients can easily book, cancel, or reschedule appointments and doctors can manage
+                their schedules effectively, all while ensuring the protection of patient data in compliance with
+                privacy standards like HIPAA and GDPR.
+            </p>
+        </div>
+
+        <!-- Vision Section -->
+        <div class="mb-16">
+            <h3 class="text-2xl font-semibold text-primary-color mb-4">Our Vision</h3>
+            <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                We envision a future where healthcare services are not just efficient but also accessible to all. By
+                leveraging technology, MediConnect aims to bridge the gap between patients and doctors, creating a more
+                efficient healthcare experience that can be accessed anytime, anywhere. Our platform's long-term goal is
+                to expand its reach beyond web-based services into mobile and other platforms to ensure that healthcare
+                services are just a click away.
+            </p>
+        </div>
+
+        <!-- Meet The Team Section -->
+        <div class="team grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="team-member bg-white p-6 shadow-lg rounded-lg text-center">
+                <img src="https://t3.ftcdn.net/jpg/06/67/21/06/360_F_667210600_MWOOgDtBf1mv8f9RWYbiVIpGNPe8Vq82.jpg"
+                    alt="Duncan Bittok" class="w-32 h-32 mx-auto rounded-full object-cover mb-4">
+                <h4 class="text-xl font-semibold text-primary-color">Duncan Bittok</h4>
+                <p class="text-gray-600">Project Manager/Leader</p>
+                <p class="text-gray-500">Duncan leads the project, ensuring the system meets the needs of both patients
+                    and healthcare providers. He oversees the development process and ensures the project stays within
+                    budget and on schedule.</p>
+            </div>
+
+            <div class="team-member bg-white p-6 shadow-lg rounded-lg text-center">
+                <img src="https://www.shutterstock.com/image-vector/black-woman-smiling-portrait-vector-600nw-2281497689.jpg"
+                    alt="Enid Jepkosgei" class="w-32 h-32 mx-auto rounded-full object-cover mb-4">
+                <h4 class="text-xl font-semibold text-primary-color">Enid Jepkosgei</h4>
+                <p class="text-gray-600">Designer/UX Specialist</p>
+                <p class="text-gray-500">Enid is responsible for creating the user-friendly interface of MediConnect.
+                    She ensures the platform is intuitive, easy to navigate, and provides a seamless experience for both
+                    patients and doctors.</p>
+            </div>
+
+            <div class="team-member bg-white p-6 shadow-lg rounded-lg text-center">
+                <img src="https://cdn1.iconfinder.com/data/icons/avatars-round-flat/33/an-05-512.png" alt="Peter Tankoi"
+                    class="w-32 h-32 mx-auto rounded-full object-cover mb-4">
+                <h4 class="text-xl font-semibold text-primary-color">Peter Tankoi</h4>
+                <p class="text-gray-600">Developer/Engineer</p>
+                <p class="text-gray-500">Peter handles the development and technical aspects of MediConnect, ensuring
+                    that the platform runs smoothly and securely, while meeting all the functional requirements of the
+                    project.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
