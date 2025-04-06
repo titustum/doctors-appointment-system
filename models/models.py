@@ -1,5 +1,6 @@
 from datetime import datetime, timezone
 from app import db
+from werkzeug.security import generate_password_hash, check_password_hash
 
 # Department Model (Doctors Specialties)
 class Department(db.Model):
@@ -27,6 +28,19 @@ class Doctor(db.Model):
 
     def __repr__(self):
         return f'<Doctor {self.name}, Department {self.department.name}, Rating: {self.rating}>'
+    
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(200), nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password_hash = db.Column(db.String(128), nullable=False)
+
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
 
 # Appointment Model 
 class Appointment(db.Model): 
@@ -54,4 +68,10 @@ class Appointment(db.Model):
     # Representation
     def __repr__(self):
         return f'<Appointment {self.id} with Doctor ID {self.doctor_id} on {self.preferred_date} at {self.preferred_time}>'
+    
+
+
+
+
+
 

@@ -1,6 +1,7 @@
+from functools import wraps
 import os
 from random import random
-from flask import Flask, jsonify, render_template, url_for, request, redirect, flash
+from flask import Flask, jsonify, render_template, session, url_for, request, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from werkzeug.utils import secure_filename
@@ -144,6 +145,7 @@ def about():
     return render_template('about.html')
 
 
+
 # Simple route for the login page
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -151,18 +153,29 @@ def login():
         email = request.form['email']
         password = request.form['password']
 
-        # Dummy authentication (replace with actual logic)
-        if email == "test@domain.com" and password == "password123":
+        # Retrieve user from the database
+        user = User.query.filter_by(email=email).first()
+
+        if user and user.check_password(password):
+            # Login successful
+            session['user_id'] = user.id  # Store the user's ID in the session
             flash('Login successful!', 'success')
-            return redirect(url_for('dashboard'))
+            return redirect(url_for('dashboard'))  # Redirect to the dashboard or protected page
         else:
+            # Invalid credentials
             flash('Invalid credentials. Please try again.', 'danger')
             return redirect(url_for('login'))
-    
+
     return render_template('login.html')
 
 
-# Simple route for the register page
+@app.route('/logout')
+def logout():
+    session.pop('user_id', None)  # Remove the user ID from the session
+    flash('You have been logged out.', 'info')
+    return redirect(url_for('login'))
+
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -177,17 +190,46 @@ def register():
             flash('Passwords do not match. Please try again.', 'danger')
             return redirect(url_for('register'))
 
-        # For now, print the data (replace with actual DB logic)
-        print(f"Name: {name}, Email: {email}, Password: {password}")
-        
-        # Dummy registration success (you should hash passwords and store them in the database)
+        if len(password) < 8:
+            flash('Password must be at least 8 characters long.', 'danger')
+            return redirect(url_for('register'))
+
+        # Check if email already exists in the database
+        existing_user = User.query.filter_by(email=email).first()
+        if existing_user:
+            flash('Email already exists. Please log in.', 'danger')
+            return redirect(url_for('login'))
+
+        # Create a new User instance
+        user = User(name=name, email=email)
+        user.set_password(password)  # Hash the password before saving
+
+        # Add to the database and commit
+        db.session.add(user)
+        db.session.commit()
+
+        # Flash success message and redirect to login
         flash('Registration successful! Please log in.', 'success')
         return redirect(url_for('login'))
 
     return render_template('register.html')
 
+
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user_id' not in session:
+            flash('You need to be logged in to access this page.', 'warning')
+            return redirect(url_for('login'))
+        return f(*args, **kwargs)
+    return decorated_function
+
+
+
 # Simple route for a dashboard (protected page after login)
 @app.route('/dashboard')
+@login_required
 def dashboard():
 
     departments = Department.query.all()
@@ -210,12 +252,14 @@ def dashboard():
                            upcoming_appointments=upcoming_appointments,
                            total_doctors=total_doctors,
                            upcoming_appointments_list=upcoming_appointments_list,
-                           departments = departments
+                           departments = departments,
+                           user= User.query.get(session['user_id'])
                            )
 
 
 
 @app.route('/admin/appointments')
+@login_required
 def admin_view_appointments():
     doctor_id = request.args.get('doctor', None)
     
@@ -225,8 +269,14 @@ def admin_view_appointments():
         appointments = Appointment.query.all()
     
     doctors = Doctor.query.all()
+
+    user = User.query.get(session['user_id'])
     
-    return render_template('admin/appointments.html', appointments=appointments, doctors=doctors, selected_doctor_id=doctor_id)
+    return render_template('admin/appointments.html', 
+                           appointments=appointments, 
+                           doctors=doctors, 
+                           selected_doctor_id=doctor_id,
+                           user=user)
 
 
 

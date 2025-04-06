@@ -5,26 +5,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Medical Dashboard</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gray-100 print:bg-white font-[Inter]">
     <!-- Main Dashboard Container -->
     <div class="min-h-screen flex">
         <!-- Sidebar -->
-        <aside class="w-64 bg-blue-800 text-white hidden md:block">
+        <aside class="w-64 bg-blue-800 text-white hidden md:block print:hidden">
             <div class="p-6">
                 <h2 class="text-2xl font-bold">MedPortal</h2>
             </div>
             <nav class="mt-6">
-                <a href="#" class="flex items-center py-3 px-6 bg-blue-900">
+                <a href="{{ url_for('dashboard') }}" class="flex items-center py-3 px-6 hover:bg-blue-700">
                     <i class="fas fa-chart-line mr-3"></i>
                     <span>Dashboard</span>
                 </a>
-                <a href="#" class="flex items-center py-3 px-6 hover:bg-blue-700">
+                <a href="{{ url_for('admin_view_appointments') }}" class="flex items-center py-3 px-6 bg-blue-900">
                     <i class="fas fa-calendar-alt mr-3"></i>
                     <span>Appointments</span>
                 </a>
@@ -40,26 +41,30 @@
                     <i class="fas fa-cog mr-3"></i>
                     <span>Settings</span>
                 </a>
+                <a href="{{ url_for('logout') }}" class="mt-auto flex items-center py-3 px-6 hover:bg-blue-700">
+                    <i class="fas fa-arrow-right mr-3"></i>
+                    <span>Logout</span>
+                </a>
             </nav>
         </aside>
 
         <!-- Main Content -->
         <div class="flex-1 flex flex-col overflow-hidden">
             <!-- Top Navigation -->
-            <header class="bg-white shadow-md p-4 flex justify-between items-center">
+            <header class="bg-white shadow-md p-4 flex justify-between items-center print:hidden">
                 <button class="md:hidden text-gray-600 focus:outline-none">
                     <i class="fas fa-bars text-xl"></i>
                 </button>
-                <div class="flex items-center space-x-4">
+                <div class="flex flex-grow justify-between items-center space-x-4">
                     <div class="relative">
                         <i class="fas fa-bell text-gray-500"></i>
                         <span
                             class="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs">3</span>
                     </div>
                     <div class="flex items-center space-x-2">
-                        <img src="https://cdn1.vectorstock.com/i/1000x1000/58/30/patient-broken-arm-avatar-filled-outline-icon-vector-22675830.jpg"
-                            alt="User" class="w-10 h-10 rounded-full">
-                        <span class="text-gray-700 font-medium">Dr. Smith</span>
+                        <img src="https://cdn-icons-png.flaticon.com/512/12724/12724606.png" alt="User"
+                            class="w-10 h-10 rounded-full object-contain border-2 border-green-600 p-1">
+                        <span class="text-gray-700 font-medium">{{ user.name }}</span>
                     </div>
                 </div>
             </header>
@@ -67,19 +72,19 @@
             <!-- Dashboard Content -->
             <main class="flex-1 overflow-y-auto p-6">
 
-                <section class="admin-appointments py-16 bg-gray-50">
+                <section class="admin-appointments py-16 bg-gray-50 print:bg-white">
                     <div class="container mx-auto px-4">
                         <div class="flex justify-between">
-                            <h2 class="text-3xl font-semibold text-gray-800 mb-6">Appointments</h2>
+                            <h2 class="text-3xl font-semibold text-gray-800 print:mb-6">Appointments</h2>
                             <button onclick="window.print()"
-                                class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300">
+                                class="bg-blue-600 print:hidden text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300">
                                 Print Appointments
                             </button>
                         </div>
 
 
                         <!-- Doctor Filter Dropdown -->
-                        <div class="mb-6">
+                        <div class="mb-6 print:hidden">
                             <label for="doctor" class="block text-sm font-medium text-gray-700 mb-2">Filter by
                                 Doctor</label>
                             <select id="doctor" name="doctor"
@@ -95,7 +100,7 @@
                         </div>
 
                         <!-- Appointments Table -->
-                        <div class="overflow-x-auto bg-white rounded-lg shadow-md pb-6">
+                        <div class="overflow-x-auto bg-white rounded-lg shadow-md print:shadow-none pb-6">
                             <table class="min-w-full table-auto text-sm">
                                 <thead class="bg-gray-100 text-gray-600">
                                     <tr>
@@ -105,7 +110,7 @@
                                         <th class="py-3 px-4 text-left">Date</th>
                                         <th class="py-3 px-4 text-left">Time</th>
                                         <th class="py-3 px-4 text-left">Status</th>
-                                        <th class="py-3 px-4 text-left">Actions</th>
+                                        <th class="py-3 px-4 text-left print:hidden">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -118,7 +123,7 @@
                                         </td>
                                         <td class="py-2 px-4">{{ appointment.preferred_time.capitalize() }}</td>
                                         <td class="py-2 px-4">{{ appointment.status }}</td>
-                                        <td class="py-2 px-4">
+                                        <td class="py-2 px-4 print:hidden">
                                             <a href="#" class="text-blue-600 hover:underline">View</a>
                                         </td>
                                     </tr>

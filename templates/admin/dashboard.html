@@ -5,13 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Medical Dashboard</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gray-100 font-[Inter]">
     <!-- Main Dashboard Container -->
     <div class="min-h-screen flex">
         <!-- Sidebar -->
@@ -20,11 +21,12 @@
                 <h2 class="text-2xl font-bold">MedPortal</h2>
             </div>
             <nav class="mt-6">
-                <a href="#" class="flex items-center py-3 px-6 bg-blue-900">
+                <a href="{{ url_for('dashboard') }}" class="flex items-center py-3 px-6 bg-blue-900">
                     <i class="fas fa-chart-line mr-3"></i>
                     <span>Dashboard</span>
                 </a>
-                <a href="#" class="flex items-center py-3 px-6 hover:bg-blue-700">
+                <a href="{{ url_for('admin_view_appointments') }}"
+                    class="flex items-center py-3 px-6 hover:bg-blue-700">
                     <i class="fas fa-calendar-alt mr-3"></i>
                     <span>Appointments</span>
                 </a>
@@ -40,6 +42,11 @@
                     <i class="fas fa-cog mr-3"></i>
                     <span>Settings</span>
                 </a>
+                <a href="{{ url_for('logout') }}" class="mt-auto flex items-center py-3 px-6 hover:bg-blue-700">
+                    <i class="fas fa-arrow-right mr-3"></i>
+                    <span>Logout</span>
+                </a>
+
             </nav>
         </aside>
 
@@ -50,16 +57,16 @@
                 <button class="md:hidden text-gray-600 focus:outline-none">
                     <i class="fas fa-bars text-xl"></i>
                 </button>
-                <div class="flex items-center space-x-4">
+                <div class="flex flex-grow justify-between items-center space-x-4">
                     <div class="relative">
                         <i class="fas fa-bell text-gray-500"></i>
                         <span
                             class="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs">3</span>
                     </div>
                     <div class="flex items-center space-x-2">
-                        <img src="https://cdn1.vectorstock.com/i/1000x1000/58/30/patient-broken-arm-avatar-filled-outline-icon-vector-22675830.jpg"
-                            alt="User" class="w-10 h-10 rounded-full">
-                        <span class="text-gray-700 font-medium">Dr. Smith</span>
+                        <img src="https://cdn-icons-png.flaticon.com/512/12724/12724606.png" alt="User"
+                            class="w-10 h-10 rounded-full object-contain border-2 border-green-600 p-1">
+                        <span class="text-gray-700 font-medium">{{ user.name }}</span>
                     </div>
                 </div>
             </header>
@@ -134,7 +141,8 @@
                 <div class="bg-white p-6 rounded-lg shadow-md mb-8">
                     <div class="flex justify-between items-center mb-6">
                         <h3 class="text-lg font-semibold text-gray-800">Upcoming Appointments</h3>
-                        <a href="#" class="text-blue-600 hover:text-blue-800 text-sm">View All</a>
+                        <a href="{{ url_for('admin_view_appointments') }}"
+                            class="text-blue-600 hover:text-blue-800 text-sm">View All</a>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="min-w-full table-auto">
