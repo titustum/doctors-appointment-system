@@ -1,7 +1,7 @@
 from app import create_app, db
 from models.models import Doctor, Appointment, Department
 from datetime import datetime, timedelta
-import random
+from random import choice
 import faker  # Using the Faker library to generate fake data
 
 app = create_app()
@@ -49,46 +49,40 @@ def seed_data():
     visit_types = ['New Patient Consultation', 'Follow-up Visit', 'Routine Check-up', 'Urgent Care']
 
     # Generate some fake appointments for demonstration
-    appointments = []
-    for i in range(10):  # Create 10 appointments
-        doctor = random.choice(doctors)
-        department = db.session.get(Department, doctor.department_id)
-        appointment_time = random.choice(appointment_times)
-        status = random.choice(['Scheduled', 'Completed', 'Cancelled'])
-        visit_type = random.choice(visit_types)
-
-        # Create fake guest data
-        guest_name = fake.name()
-        guest_email = fake.email()
-        guest_phone = fake.phone_number()
-        guest_dob = fake.date_of_birth(minimum_age=18, maximum_age=75)
-        preferred_date = fake.date_this_month()
-        preferred_time = fake.time()
-
-        # Create an appointment for a guest
+    num_records = 10
+    for _ in range(num_records):
+        # Create fake data
+        doctor = Doctor.query.order_by(db.func.random()).first()  # Randomly pick a doctor
+        status = choice(['Scheduled', 'Completed', 'Cancelled'])
+        preferred_date = fake.date_this_year()  # Random date within the current year
+        preferred_time = choice(['Morning', 'Afternoon', 'Evening'])
+        visit_type = choice(['New', 'Follow-up'])
+        issue_description = fake.text(max_nb_chars=200)  # Random issue description
+        insurance_provider = fake.company() if fake.boolean() else None
+        policy_number = fake.uuid4() if insurance_provider else None
+        
+        # Generate a fake appointment
         appointment = Appointment(
-            appointment_time=appointment_time,
             status=status,
-            guest_name=guest_name,
-            guest_email=guest_email,
-            guest_phone=guest_phone,
-            guest_dob=guest_dob,
-            department_id=department.id,
-            doctor_id=doctor.id,
-            doctor_name=doctor.name,
+            doctor_id=doctor.id,  # Link to an existing doctor
+            patient_name=fake.name(),
+            patient_email=fake.email(),
+            patient_phone=fake.phone_number(),
+            patient_dob=fake.date_of_birth(minimum_age=18, maximum_age=85),  # Adults only
             preferred_date=preferred_date,
             preferred_time=preferred_time,
             visit_type=visit_type,
-            issue_description=fake.text(max_nb_chars=200),
-            insurance_provider=fake.company(),
-            policy_number=fake.uuid4()
+            issue_description=issue_description,
+            insurance_provider=insurance_provider,
+            policy_number=policy_number,
         )
-        appointments.append(appointment)
+        
+        # Add the appointment to the session
+        db.session.add(appointment)
 
-    db.session.add_all(appointments)
+    # Commit the changes to the database
     db.session.commit()
-
-    print("Data seeded successfully.")
+    print(f"{num_records} appointments have been added to the database.") 
 
 # Run the seeder
 if __name__ == '__main__':

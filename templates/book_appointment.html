@@ -1,169 +1,96 @@
 {% extends "base.html" %}
 
-{% block title %}Contact Us - MediConnect{% endblock %}
+{% block title %} Doctors - MediConnect {% endblock %}
 
 {% block content %}
-
-<!-- Booking Form Section -->
-<section class="py-12">
-  <div class="container mx-auto px-4">
-    <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-8">
-      <h2 class="text-2xl font-semibold text-gray-800 mb-6">Schedule Your Visit</h2>
-
-      <form action="{{ url_for('book_appointment') }}" method="POST" class="space-y-6">
-        <!-- Personal Information -->
-        <div>
-          <h3 class="text-lg font-medium text-gray-800 mb-4 border-b pb-2">Personal Information</h3>
-          <div class="grid md:grid-cols-2 gap-4">
-            <div>
-              <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-              <input type="text" id="name" name="name" required
-                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+<section class="doctors-section py-16 bg-gray-50">
+    <div class="container mx-auto grid gap-8 md:grid-cols-2 px-4">
+        <!-- Doctor Card -->
+        <div
+            class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:shadow-lg hover:-translate-y-1">
+            <div class="relative">
+                <img src="{{ url_for('static', filename='uploads/'+doctor.image_url) }}"
+                    alt="Doctor image of {{ doctor.name }}" class="w-full h-[50vh] object-contain object-center">
+                <div class="absolute top-4 right-4 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">
+                    {{ doctor.department.name }}
+                </div>
             </div>
-            <div>
-              <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-              <input type="email" id="email" name="email" required
-                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            <div class="p-6">
+                <h3 class="text-xl font-semibold text-gray-800">{{ doctor.name }}</h3>
+                <p class="text-gray-600 mb-2">{{ doctor.department.name }}</p>
+                <div class="flex items-center mb-4">
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <span class="text-gray-600 text-sm ml-2">{{ doctor.rating }} (124 reviews)</span>
+                </div>
+                <div class="flex items-center text-sm text-gray-600 mb-4">
+                    <i class="far fa-calendar-alt mr-2"></i>
+                    <span>Available: {{ doctor.work_hours }}</span>
+                </div>
             </div>
-            <div>
-              <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-              <input type="tel" id="phone" name="phone" required
-                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-            </div>
-            <div>
-              <label for="dob" class="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
-              <input type="date" id="dob" name="dob" required
-                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-            </div>
-          </div>
         </div>
 
-        <!-- Appointment Details -->
-        <div>
-          <h3 class="text-lg font-medium text-gray-800 mb-4 border-b pb-2">Appointment Details</h3>
-          <div class="grid md:grid-cols-2 gap-4">
-            <div>
-              <label for="department" class="block text-sm font-medium text-gray-700 mb-1">Department</label>
-              <select id="department" name="department" required onchange="updateDoctors()"
-                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                <option value="">Select Department</option>
-                {% for department in departments %}
-                <option value="{{ department.id }}">{{ department.name }}</option>
-                {% endfor %}
-              </select>
-            </div>
+        <!-- Appointment Form -->
+        <div class="bg-white rounded-lg shadow-xl p-6">
+            <h3 class="text-2xl font-semibold text-gray-800 mb-4">Book Appointment with {{ doctor.name }}</h3>
+            <form action="{{ url_for('book_appointment', doctor_id=doctor.id) }}" method="POST" class="space-y-4">
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                    <input type="text" id="name" name="name" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                    <input type="email" id="email" name="email" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div>
+                    <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div>
+                    <label for="dob" class="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
+                    <input type="date" id="dob" name="dob" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div>
+                    <label for="date" class="block text-sm font-medium text-gray-700 mb-1">Preferred Date</label>
+                    <input type="date" id="date" name="date" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div>
+                    <label for="time" class="block text-sm font-medium text-gray-700 mb-1">Preferred Time</label>
+                    <select id="time" name="time" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <option value="">Select Time</option>
+                        <option value="morning">Morning (9AM - 12PM)</option>
+                        <option value="afternoon">Afternoon (1PM - 5PM)</option>
+                        <option value="evening">Evening (6PM - 8PM)</option>
+                    </select>
 
-            <div>
-              <label for="doctor_id" class="block text-sm font-medium text-gray-700 mb-1">Select Doctor</label>
-              <select id="doctor_id" name="doctor_id" required
-                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                <option value="">Select a doctor</option>
-                {% for doctor in doctors %}
-                <option value="{{ doctor.id }}">{{ doctor.name }}</option>
-                {% endfor %}
-              </select>
-            </div>
-
-            <div>
-              <label for="appointment_date" class="block text-sm font-medium text-gray-700 mb-1">Preferred Date</label>
-              <input type="date" id="appointment_date" name="appointment_date" required
-                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-            </div>
-
-            <div>
-              <label for="appointment_time" class="block text-sm font-medium text-gray-700 mb-1">Preferred Time</label>
-              <select id="appointment_time" name="appointment_time" required
-                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                <option value="">Select Time</option>
-                <option value="morning">Morning (9AM - 12PM)</option>
-                <option value="afternoon">Afternoon (1PM - 5PM)</option>
-                <option value="evening">Evening (6PM - 8PM)</option>
-              </select>
-            </div>
-          </div>
+                </div>
+                <div>
+                    <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Brief Description of Issue
+                        (Optional)</label>
+                    <textarea id="message" name="message" rows="3"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                </div>
+                <button type="submit"
+                    class="w-full bg-blue-600 text-white py-3 px-6 rounded-md hover:bg-blue-700 transition duration-300 flex items-center justify-center gap-2 font-medium">
+                    <i class="fas fa-calendar-check"></i> Confirm Appointment
+                </button>
+                <p class="text-xs text-gray-500 text-center mt-2">By booking an appointment, you agree to our
+                    <a href="#" class="text-blue-600 hover:underline">Terms of Service</a> and
+                    <a href="#" class="text-blue-600 hover:underline">Privacy Policy</a>.
+                </p>
+            </form>
         </div>
-
-        <!-- Reason for Visit -->
-        <div>
-          <h3 class="text-lg font-medium text-gray-800 mb-4 border-b pb-2">Reason for Visit</h3>
-          <div>
-            <label for="visit_type" class="block text-sm font-medium text-gray-700 mb-1">Type of Visit</label>
-            <select id="visit_type" name="visit_type" required
-              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 mb-4">
-              <option value="">Select Visit Type</option>
-              <option value="new">New Patient Consultation</option>
-              <option value="followup">Follow-up Visit</option>
-              <option value="routine">Routine Check-up</option>
-              <option value="urgent">Urgent Care</option>
-            </select>
-          </div>
-          <div>
-            <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Brief Description of Issue
-              (Optional)</label>
-            <textarea id="message" name="message" rows="3"
-              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
-          </div>
-        </div>
-
-        <!-- Insurance Information -->
-        <div>
-          <h3 class="text-lg font-medium text-gray-800 mb-4 border-b pb-2">Insurance Information (Optional)</h3>
-          <div class="grid md:grid-cols-2 gap-4">
-            <div>
-              <label for="insurance" class="block text-sm font-medium text-gray-700 mb-1">Insurance Provider</label>
-              <input type="text" id="insurance" name="insurance"
-                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-            </div>
-            <div>
-              <label for="policy" class="block text-sm font-medium text-gray-700 mb-1">Policy Number</label>
-              <input type="text" id="policy" name="policy"
-                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-            </div>
-          </div>
-        </div>
-
-        <!-- Submit Button -->
-        <div class="pt-4">
-          <button type="submit"
-            class="w-full bg-blue-600 text-white py-3 px-6 rounded-md hover:bg-blue-700 transition duration-300 flex items-center justify-center gap-2 font-medium">
-            <i class="fas fa-calendar-check"></i> Confirm Appointment
-          </button>
-        </div>
-
-        <p class="text-xs text-gray-500 text-center mt-2">By booking an appointment, you agree to our <a href="#"
-            class="text-blue-600 hover:underline">Terms of Service</a> and <a href="#"
-            class="text-blue-600 hover:underline">Privacy Policy</a>.</p>
-      </form>
     </div>
-  </div>
 </section>
-
-<!-- Doctor Selection Preview Section -->
-<section class="py-8 bg-gray-50 hidden" id="doctorPreview">
-  <div class="container mx-auto px-4">
-    <div class="max-w-4xl mx-auto bg-white rounded-lg shadow p-6">
-      <h3 class="text-xl font-semibold text-gray-800 mb-4">Selected Doctor</h3>
-      <div class="flex flex-col md:flex-row items-start gap-6">
-        <div class="w-32 h-32 bg-gray-200 rounded-full overflow-hidden flex-shrink-0">
-          <img id="doctorImage" src="/api/placeholder/128/128" alt="Doctor" class="w-full h-full object-cover">
-        </div>
-        <div>
-          <h4 id="doctorName" class="text-lg font-medium text-gray-800">Dr. John Smith</h4>
-          <p id="doctorSpecialty" class="text-blue-600 mb-2">Cardiology</p>
-          <p id="doctorBio" class="text-gray-600 mb-3">Dr. Smith has over 15 years of experience in treating cardiac
-            conditions. He specializes in preventive cardiology and heart health management.</p>
-          <div class="flex items-center gap-1 text-yellow-400">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star-half-alt"></i>
-            <span class="text-gray-600 ml-2">(127 patient reviews)</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 {% endblock %}

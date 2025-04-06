@@ -171,12 +171,12 @@
                                             <img src="https://cdn1.vectorstock.com/i/1000x1000/58/30/patient-broken-arm-avatar-filled-outline-icon-vector-22675830.jpg"
                                                 alt="Patient" class="w-8 h-8 rounded-full mr-3">
                                             <div>
-                                                <p class="font-medium text-gray-800">{{ appointment.guest_name }}</p>
+                                                <p class="font-medium text-gray-800">{{ appointment.patient_name }}</p>
                                                 <p class="text-gray-500 text-xs">ID: #{{ appointment.id }}</p>
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="px-4 py-3 text-gray-700">{{ appointment.doctor_name }}</td>
+                                    <td class="px-4 py-3 text-gray-700">{{ appointment.doctor.name }}</td>
                                     <td class="px-4 py-3 text-gray-700">{{
                                         appointment.preferred_date.strftime('%m/%d/%Y') }}</td>
                                     <td class="px-4 py-3 text-gray-700">{{ appointment.preferred_time }}</td>

@@ -1,4 +1,5 @@
 import os
+from random import random
 from flask import Flask, jsonify, render_template, url_for, request, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -35,13 +36,86 @@ def index():
 
 @app.route('/doctors', methods=['GET'])
 def doctors():
+    departments = Department.query.all()
     doctors = Doctor.query.all()
-    return render_template('doctors.html', doctors=doctors)
+    return render_template('doctors.html', doctors=doctors, departments=departments)
 
 @app.route('/services')
 def services():
     return render_template('services.html')
 
+
+@app.route('/book-appointment/<int:doctor_id>', methods=['GET', 'POST'])
+def book_appointment(doctor_id):
+    doctor =  Doctor.query.get(doctor_id)
+    if not doctor:
+        return redirect(url_for('doctors'))
+    
+    if request.method == 'POST':
+        # Retrieve data from the form
+        name = request.form.get('name')
+        email = request.form.get('email')
+        phone = request.form.get('phone')
+        date = request.form.get('date')
+        time = request.form.get('time')
+        message = request.form.get('message')
+
+        # Create a new appointment instance
+        appointment = Appointment(
+            doctor_id=doctor.id,
+            patient_name=name,
+            patient_email=email,
+            patient_phone=phone,
+            patient_dob=datetime.strptime(request.form.get('dob'), '%Y-%m-%d'),  # Optional, if included in form
+            preferred_date=datetime.strptime(date, '%Y-%m-%d'),
+            preferred_time=time,
+            issue_description=message,
+            status='Scheduled'  # Default status
+        )
+
+        # Add the appointment to the database
+        try:
+            db.session.add(appointment)
+            db.session.commit()
+            flash("Appointment successfully booked!", 'success')
+            return redirect(url_for('appointment_confirmation', appointment_id=appointment.id))  # Redirect to confirmation page
+        except Exception as e:
+            db.session.rollback()
+            flash(f"An error occurred while booking the appointment: {e}", 'danger')
+    doctor.rating = round(random() * 10, 1)
+    return render_template('book_appointment.html', doctor=doctor)
+
+
+@app.route('/appointment-confirmation/<int:appointment_id>')
+def appointment_confirmation(appointment_id):
+    appointment = Appointment.query.get_or_404(appointment_id)
+    return render_template('appointment_confirmation.html', appointment=appointment)
+
+
+
+
+# View doctors that belong to a department
+@app.route('/search_doctors', methods=['GET'])
+def search_doctors():
+    search_term = request.args.get('query', '').strip().lower()
+    # Handle empty search terms
+    if not search_term:
+        doctors = []
+    else:
+        try:
+            doctors = Doctor.query.filter(Doctor.name.ilike(f'%{search_term}%')).all()
+        except Exception as e:
+            doctors = []
+            print(f"Error fetching doctors: {e}")
+
+    return render_template('search_doctors.html', doctors=doctors)
+
+# View doctors that belongs to department
+@app.route('/departmental_doctors/<int:department_id>' , methods=['GET'])  
+def departmental_doctors(department_id):
+    department = Department.query.get(department_id) 
+    doctors = Doctor.query.filter_by(department_id=department_id).all() 
+    return render_template('categorized_doctors.html', doctors=doctors, department=department)
 
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
@@ -119,13 +193,13 @@ def dashboard():
     total_appointments = Appointment.query.count()
 
     # Get total number of upcoming appointments (status 'Scheduled')
-    upcoming_appointments = Appointment.query.filter(Appointment.appointment_time > datetime.now(), Appointment.status == "Scheduled").count()
+    upcoming_appointments = Appointment.query.filter(Appointment.preferred_time > datetime.now(), Appointment.status == "Scheduled").count()
 
     # Get total number of doctors
     total_doctors = Doctor.query.count()
 
     # Get the upcoming appointments (for displaying in the table)
-    upcoming_appointments_list = Appointment.query.filter(Appointment.appointment_time > datetime.now(), Appointment.status == "Scheduled").all()
+    upcoming_appointments_list = Appointment.query.filter(Appointment.preferred_time > datetime.now(), Appointment.status == "Scheduled").all()
 
     # Render the dashboard template and pass the data
     return render_template('dashboard.html', 
@@ -135,54 +209,6 @@ def dashboard():
                            upcoming_appointments_list=upcoming_appointments_list,
                            departments = departments
                            )
-
-
-
-# Route for displaying the form and handling POST requests
-@app.route('/book', methods=['GET', 'POST'])
-def book_appointment():
-    if request.method == 'POST':
-        # Get form data from the POST request
-        name = request.form['name']
-        email = request.form['email']
-        phone = request.form['phone']
-        dob = datetime.strptime(request.form['dob'], '%Y-%m-%d')
-        department = request.form['department']
-        doctor_id = request.form['doctor_id']
-        appointment_date = datetime.strptime(request.form['appointment_date'], '%Y-%m-%d')
-        appointment_time = request.form['appointment_time']
-        visit_type = request.form['visit_type']
-        message = request.form.get('message', '')  # Optional field
-        insurance_provider = request.form.get('insurance', '')  # Optional field
-        policy_number = request.form.get('policy', '')  # Optional field
-
-        # Create a new appointment object
-        new_appointment = Appointment(
-            guest_name=name,
-            guest_email=email,
-            guest_phone=phone,
-            guest_dob=dob,
-            department_id=department,
-            doctor_id=doctor_id,
-            appointment_date=appointment_date,
-            appointment_time=appointment_time,
-            visit_type=visit_type,
-            message=message,
-            insurance_provider=insurance_provider,
-            policy_number=policy_number
-        ) 
-
-        # Add the new appointment to the database
-        db.session.add(new_appointment)
-        db.session.commit()
-
-        # Redirect to confirmation page
-        return redirect(url_for('confirmation'))
-
-    # Render the form on GET request
-    departments = Department.query.all()
-    doctors = Doctor.query.all()
-    return render_template('book_appointment.html', doctors=doctors,departments=departments) 
 
 
 

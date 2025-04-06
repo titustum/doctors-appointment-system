@@ -32,52 +32,10 @@
                     <div class="flex gap-6">
                         <a href="{{ url_for('index') }}"
                             class="text-white hover:text-blue-100 font-medium py-2 border-b-2 border-transparent hover:border-white transition-all">Home</a>
-
-                        <!-- Doctors Dropdown -->
-                        <div class="relative group">
-                            <button
-                                class="text-white hover:text-blue-100 font-medium py-2 border-b-2 border-transparent group-hover:border-white transition-all flex items-center gap-1">
-                                Doctors <i class="fas fa-chevron-down text-xs ml-1"></i>
-                            </button>
-                            <div
-                                class="absolute left-0 top-full w-56 bg-white shadow-lg rounded-b-lg invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all">
-                                <a href="{{ url_for('doctors') }}"
-                                    class="block px-4 py-3 text-gray-700 hover:bg-blue-50 border-l-2 border-transparent hover:border-blue-600">All
-                                    Doctors</a>
-                                <a href="{{ url_for('doctors') }}"
-                                    class="block px-4 py-3 text-gray-700 hover:bg-blue-50 border-l-2 border-transparent hover:border-blue-600">Cardiologists</a>
-                                <a href="{{ url_for('doctors') }}"
-                                    class="block px-4 py-3 text-gray-700 hover:bg-blue-50 border-l-2 border-transparent hover:border-blue-600">Neurologists</a>
-                                <a href="{{ url_for('doctors') }}"
-                                    class="block px-4 py-3 text-gray-700 hover:bg-blue-50 border-l-2 border-transparent hover:border-blue-600">Pediatricians</a>
-                                <a href="{{ url_for('doctors') }}"
-                                    class="block px-4 py-3 text-gray-700 hover:bg-blue-50 border-l-2 border-transparent hover:border-blue-600">Orthopedic
-                                    Surgeons</a>
-                            </div>
-                        </div>
-
-                        <!-- Services Dropdown -->
-                        <div class="relative group">
-                            <button
-                                class="text-white hover:text-blue-100 font-medium py-2 border-b-2 border-transparent group-hover:border-white transition-all flex items-center gap-1">
-                                Services <i class="fas fa-chevron-down text-xs ml-1"></i>
-                            </button>
-                            <div
-                                class="absolute left-0 top-full w-56 bg-white shadow-lg rounded-b-lg invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all">
-                                <a href="{{ url_for('services') }}"
-                                    class="block px-4 py-3 text-gray-700 hover:bg-blue-50 border-l-2 border-transparent hover:border-blue-600">All
-                                    Services</a>
-                                <a href="{{ url_for('services',) }}"
-                                    class="block px-4 py-3 text-gray-700 hover:bg-blue-50 border-l-2 border-transparent hover:border-blue-600">Cardiology</a>
-                                <a href="{{ url_for('services') }}"
-                                    class="block px-4 py-3 text-gray-700 hover:bg-blue-50 border-l-2 border-transparent hover:border-blue-600">Neurology</a>
-                                <a href="{{ url_for('services') }}"
-                                    class="block px-4 py-3 text-gray-700 hover:bg-blue-50 border-l-2 border-transparent hover:border-blue-600">Pediatrics</a>
-                                <a href="{{ url_for('services') }}"
-                                    class="block px-4 py-3 text-gray-700 hover:bg-blue-50 border-l-2 border-transparent hover:border-blue-600">Orthopedics</a>
-                            </div>
-                        </div>
-
+                        <a href="{{ url_for('doctors') }}"
+                            class="text-white hover:text-blue-100 font-medium py-2 border-b-2 border-transparent hover:border-white transition-all">Doctors</a>
+                        <a href="{{ url_for('services') }}"
+                            class="text-white hover:text-blue-100 font-medium py-2 border-b-2 border-transparent hover:border-white transition-all">Services</a>
                         <a href="{{ url_for('about') }}"
                             class="text-white hover:text-blue-100 font-medium py-2 border-b-2 border-transparent hover:border-white transition-all">About</a>
                         <a href="{{ url_for('contact') }}"
@@ -86,12 +44,17 @@
 
                     <!-- Action Buttons -->
                     <div class="flex items-center gap-3">
-                        <a href="{{ url_for('book_appointment') }}"
-                            class="bg-white text-blue-600 hover:bg-blue-50 px-4 py-2 rounded-md font-medium transition">Book
-                            Now</a>
+                        <form action="{{ url_for('search_doctors') }}" method="GET" class="relative">
+                            <input type="text" name="query" placeholder="Search doctors..."
+                                class="px-4 py-2 rounded-md bg-white border border-white text-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <button type="submit"
+                                class="absolute top-0 right-0 bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-blue-800 transition">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </form>
                         <a href="{{ url_for('login') }}"
                             class="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-md font-medium transition flex items-center gap-2">
-                            <i class="fas fa-user"></i> Login
+                            <i class="fas fa-user"></i> Staff Login
                         </a>
                     </div>
                 </div>
@@ -128,52 +91,14 @@
                 <i class="fas fa-home w-6"></i> <span class="ml-2">Home</span>
             </a>
 
-            <!-- Mobile Doctors Submenu -->
-            <div class="mobile-submenu">
-                <button
-                    class="flex items-center justify-between w-full px-6 py-3 text-gray-700 hover:bg-blue-50 border-l-4 border-transparent hover:border-blue-600">
-                    <div class="flex items-center">
-                        <i class="fas fa-user-md w-6"></i> <span class="ml-2">Doctors</span>
-                    </div>
-                    <i class="fas fa-chevron-down text-xs"></i>
-                </button>
-                <div class="hidden pl-12 bg-gray-50">
-                    <a href="{{ url_for('doctors') }}" class="block py-3 px-4 text-gray-600 hover:text-blue-600">All
-                        Doctors</a>
-                    <a href="{{ url_for('doctors') }}"
-                        class="block py-3 px-4 text-gray-600 hover:text-blue-600">Cardiologists</a>
-                    <a href="{{ url_for('doctors') }}"
-                        class="block py-3 px-4 text-gray-600 hover:text-blue-600">Neurologists</a>
-                    <a href="{{ url_for('doctors') }}"
-                        class="block py-3 px-4 text-gray-600 hover:text-blue-600">Pediatricians</a>
-                    <a href="{{ url_for('doctors') }}"
-                        class="block py-3 px-4 text-gray-600 hover:text-blue-600">Orthopedic Surgeons</a>
-                </div>
-            </div>
-
-            <!-- Mobile Services Submenu -->
-            <div class="mobile-submenu">
-                <button
-                    class="flex items-center justify-between w-full px-6 py-3 text-gray-700 hover:bg-blue-50 border-l-4 border-transparent hover:border-blue-600">
-                    <div class="flex items-center">
-                        <i class="fas fa-stethoscope w-6"></i> <span class="ml-2">Services</span>
-                    </div>
-                    <i class="fas fa-chevron-down text-xs"></i>
-                </button>
-                <div class="hidden pl-12 bg-gray-50">
-                    <a href="{{ url_for('services') }}" class="block py-3 px-4 text-gray-600 hover:text-blue-600">All
-                        Services</a>
-                    <a href="{{ url_for('services') }}"
-                        class="block py-3 px-4 text-gray-600 hover:text-blue-600">Cardiology</a>
-                    <a href="{{ url_for('services') }}"
-                        class="block py-3 px-4 text-gray-600 hover:text-blue-600">Neurology</a>
-                    <a href="{{ url_for('services') }}"
-                        class="block py-3 px-4 text-gray-600 hover:text-blue-600">Pediatrics</a>
-                    <a href="{{ url_for('services') }}"
-                        class="block py-3 px-4 text-gray-600 hover:text-blue-600">Orthopedics</a>
-                </div>
-            </div>
-
+            <a href="{{ url_for('doctors') }}"
+                class="flex items-center px-6 py-3 text-gray-700 hover:bg-blue-50 border-l-4 border-transparent hover:border-blue-600">
+                <i class="fas fa-info-circle w-6"></i> <span class="ml-2">Doctors</span>
+            </a>
+            <a href="{{ url_for('services') }}"
+                class="flex items-center px-6 py-3 text-gray-700 hover:bg-blue-50 border-l-4 border-transparent hover:border-blue-600">
+                <i class="fas fa-info-circle w-6"></i> <span class="ml-2">Services</span>
+            </a>
             <a href="{{ url_for('about') }}"
                 class="flex items-center px-6 py-3 text-gray-700 hover:bg-blue-50 border-l-4 border-transparent hover:border-blue-600">
                 <i class="fas fa-info-circle w-6"></i> <span class="ml-2">About</span>
@@ -187,13 +112,23 @@
 
             <!-- Mobile Action Buttons -->
             <div class="px-6 mt-4 space-y-3">
-                <a href="{{ url_for('book_appointment') }}"
+
+                <form action="{{ url_for('search_doctors') }}" method="GET" class="relative ">
+                    <input type="text" name="query" placeholder="Search doctors..."
+                        class="px-4 py-2 border border-gray-400 rounded-md bg-white text-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <button type="submit"
+                        class="absolute top-0 right-0 bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-blue-800 transition">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+
+                <a href="{{ url_for('doctors') }}"
                     class="block bg-blue-600 text-white text-center px-4 py-3 rounded-md font-medium hover:bg-blue-700 transition">
-                    Book an Appointment
+                    Book A Doctor
                 </a>
                 <a href="{{ url_for('login') }}"
                     class="block bg-gray-100 text-gray-700 text-center px-4 py-3 rounded-md font-medium hover:bg-gray-200 transition">
-                    <i class="fas fa-user mr-2"></i> Login / Register
+                    <i class="fas fa-user mr-2"></i> Staff Login
                 </a>
             </div>
         </nav>
@@ -252,9 +187,9 @@
                         <li><a href="{{ url_for('contact') }}"
                                 class="text-gray-400 hover:text-white transition flex items-center gap-2"><i
                                     class="fas fa-chevron-right text-xs"></i> Contact Us</a></li>
-                        <li><a href="{{ url_for('book_appointment') }}"
+                        <li><a href="{{ url_for('doctors') }}"
                                 class="text-gray-400 hover:text-white transition flex items-center gap-2"><i
-                                    class="fas fa-chevron-right text-xs"></i> Book Appointment</a></li>
+                                    class="fas fa-chevron-right text-xs"></i> Book A Doctor</a></li>
                     </ul>
                 </div>
 

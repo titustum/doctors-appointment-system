@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %} Appointment Confirmation - MediConnect {% endblock %}
+
+{% block content %}
+<section class="appointment-confirmation py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <!-- Confirmation Card -->
+        <div class="bg-white rounded-lg shadow-md p-8">
+            <h2 class="text-3xl font-semibold text-gray-800 mb-4">Your Appointment is Confirmed!</h2>
+
+            <p class="text-lg text-gray-600 mb-6">Thank you for booking an appointment with Dr. {{
+                appointment.doctor.name }}. Below are the details of your appointment:</p>
+
+            <div class="space-y-4">
+                <div class="flex justify-between">
+                    <span class="font-medium text-gray-800">Doctor:</span>
+                    <span class="text-gray-600">{{ appointment.doctor.name }}</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="font-medium text-gray-800">Department:</span>
+                    <span class="text-gray-600">{{ appointment.doctor.department.name }}</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="font-medium text-gray-800">Patient Name:</span>
+                    <span class="text-gray-600">{{ appointment.patient_name }}</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="font-medium text-gray-800">Email Address:</span>
+                    <span class="text-gray-600">{{ appointment.patient_email }}</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="font-medium text-gray-800">Phone Number:</span>
+                    <span class="text-gray-600">{{ appointment.patient_phone }}</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="font-medium text-gray-800">Preferred Date:</span>
+                    <span class="text-gray-600">{{ appointment.preferred_date.strftime('%B %d, %Y') }}</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="font-medium text-gray-800">Preferred Time:</span>
+                    <span class="text-gray-600">{{ appointment.preferred_time.capitalize() }}</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="font-medium text-gray-800">Issue Description:</span>
+                    <span class="text-gray-600">{{ appointment.issue_description if appointment.issue_description else
+                        'No description provided' }}</span>
+                </div>
+            </div>
+
+            <div class="mt-8">
+                <a href="{{ url_for('home') }}"
+                    class="inline-block bg-blue-600 text-white py-3 px-6 rounded-md hover:bg-blue-700 transition duration-300">
+                    Go back to Home
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

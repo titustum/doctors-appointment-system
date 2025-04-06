@@ -3,64 +3,176 @@
 {% block title %}Our Services - MediConnect{% endblock %}
 
 {% block content %}
-<section class="services py-20 bg-gray-50 px-4">
-    <div class="container mx-auto text-center max-w-6xl">
-        <h2 class="text-3xl font-semibold text-primary-color mb-16">Our Medical Services</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+<section class="services-section py-16 bg-white">
+    <div class="container mx-auto px-4">
+        <!-- Section Header -->
+        <div class="text-center mb-12">
+            <span class="text-blue-600 font-medium">Our Medical Services</span>
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mt-2 mb-4">Comprehensive Healthcare Solutions</h2>
+            <p class="text-lg text-gray-600 max-w-3xl mx-auto">We provide a wide range of medical services to meet your
+                healthcare needs with state-of-the-art facilities and expert care.</p>
+        </div>
+
+        <!-- Services Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <!-- Service Card 1 -->
-            <div class="service-card p-6 shadow-lg rounded-lg text-center hover:shadow-xl transition duration-300">
-                <div class="service-icon text-5xl text-primary-color mb-4">
-                    <i class="fas fa-stethoscope"></i>
+            <div
+                class="bg-gray-50 rounded-lg p-8 transition-all hover:shadow-lg hover:bg-blue-50 border border-gray-100">
+                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6">
+                    <i class="fas fa-heartbeat text-2xl text-blue-600"></i>
                 </div>
-                <h3 class="text-xl font-semibold mb-2">Find Doctors</h3>
-                <p>Browse through our network of experienced and qualified doctors across various specialties.</p>
+                <h3 class="text-xl font-semibold text-gray-800 mb-3">Cardiology</h3>
+                <p class="text-gray-600 mb-4">Comprehensive diagnosis and treatment of heart conditions including ECG,
+                    stress tests, and heart disease management.</p>
+                <ul class="space-y-2 mb-6">
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span class="text-gray-700">Heart disease screening</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span class="text-gray-700">Echocardiography</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span class="text-gray-700">Cardiac rehabilitation</span>
+                    </li>
+                </ul>
+                 
             </div>
 
             <!-- Service Card 2 -->
-            <div class="service-card p-6 shadow-lg rounded-lg text-center hover:shadow-xl transition duration-300">
-                <div class="service-icon text-5xl text-primary-color mb-4">
-                    <i class="fas fa-calendar-alt"></i>
+            <div
+                class="bg-gray-50 rounded-lg p-8 transition-all hover:shadow-lg hover:bg-blue-50 border border-gray-100">
+                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-6">
+                    <i class="fas fa-brain text-2xl text-green-600"></i>
                 </div>
-                <h3 class="text-xl font-semibold mb-2">Book Appointments</h3>
-                <p>Schedule appointments online at your convenience without waiting in queues.</p>
+                <h3 class="text-xl font-semibold text-gray-800 mb-3">Neurology</h3>
+                <p class="text-gray-600 mb-4">Specialized care for disorders of the nervous system, including the brain,
+                    spinal cord, and peripheral nerves.</p>
+                <ul class="space-y-2 mb-6">
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span class="text-gray-700">Neurological examinations</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span class="text-gray-700">EEG studies</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span class="text-gray-700">Migraine treatment</span>
+                    </li>
+                </ul>
+
             </div>
 
             <!-- Service Card 3 -->
-            <div class="service-card p-6 shadow-lg rounded-lg text-center hover:shadow-xl transition duration-300">
-                <div class="service-icon text-5xl text-primary-color mb-4">
-                    <i class="fas fa-home"></i>
+            <div
+                class="bg-gray-50 rounded-lg p-8 transition-all hover:shadow-lg hover:bg-blue-50 border border-gray-100">
+                <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mb-6">
+                    <i class="fas fa-child text-2xl text-purple-600"></i>
                 </div>
-                <h3 class="text-xl font-semibold mb-2">Virtual Consultations</h3>
-                <p>Consult with doctors remotely from the comfort of your home via video calls.</p>
+                <h3 class="text-xl font-semibold text-gray-800 mb-3">Pediatrics</h3>
+                <p class="text-gray-600 mb-4">Complete healthcare for infants, children, and adolescents, focusing on
+                    growth, development, and preventive care.</p>
+                <ul class="space-y-2 mb-6">
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span class="text-gray-700">Well-child visits</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span class="text-gray-700">Immunizations</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span class="text-gray-700">Developmental assessments</span>
+                    </li>
+                </ul>
+
             </div>
 
             <!-- Service Card 4 -->
-            <div class="service-card p-6 shadow-lg rounded-lg text-center hover:shadow-xl transition duration-300">
-                <div class="service-icon text-5xl text-primary-color mb-4">
-                    <i class="fas fa-prescription-bottle-alt"></i>
+            <div
+                class="bg-gray-50 rounded-lg p-8 transition-all hover:shadow-lg hover:bg-blue-50 border border-gray-100">
+                <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mb-6">
+                    <i class="fas fa-bone text-2xl text-orange-600"></i>
                 </div>
-                <h3 class="text-xl font-semibold mb-2">Medication Delivery</h3>
-                <p>Order your prescribed medications online and have them delivered to your doorstep.</p>
+                <h3 class="text-xl font-semibold text-gray-800 mb-3">Orthopedics</h3>
+                <p class="text-gray-600 mb-4">Diagnosis and treatment of musculoskeletal conditions affecting bones,
+                    joints, muscles, ligaments, and tendons.</p>
+                <ul class="space-y-2 mb-6">
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span class="text-gray-700">Joint replacement</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span class="text-gray-700">Sports injury treatment</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span class="text-gray-700">Physical therapy</span>
+                    </li>
+                </ul>
+
             </div>
 
             <!-- Service Card 5 -->
-            <div class="service-card p-6 shadow-lg rounded-lg text-center hover:shadow-xl transition duration-300">
-                <div class="service-icon text-5xl text-primary-color mb-4">
-                    <i class="fas fa-heartbeat"></i>
+            <div
+                class="bg-gray-50 rounded-lg p-8 transition-all hover:shadow-lg hover:bg-blue-50 border border-gray-100">
+                <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-6">
+                    <i class="fas fa-procedures text-2xl text-red-600"></i>
                 </div>
-                <h3 class="text-xl font-semibold mb-2">Health Checkups</h3>
-                <p>Book comprehensive health checkups with a range of packages to choose from.</p>
+                <h3 class="text-xl font-semibold text-gray-800 mb-3">General Surgery</h3>
+                <p class="text-gray-600 mb-4">Surgical procedures for a wide range of conditions performed by highly
+                    skilled surgeons using advanced techniques.</p>
+                <ul class="space-y-2 mb-6">
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span class="text-gray-700">Minimally invasive surgery</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span class="text-gray-700">Hernia repair</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span class="text-gray-700">Gallbladder removal</span>
+                    </li>
+                </ul>
+
             </div>
 
             <!-- Service Card 6 -->
-            <div class="service-card p-6 shadow-lg rounded-lg text-center hover:shadow-xl transition duration-300">
-                <div class="service-icon text-5xl text-primary-color mb-4">
-                    <i class="fas fa-ambulance"></i>
+            <div
+                class="bg-gray-50 rounded-lg p-8 transition-all hover:shadow-lg hover:bg-blue-50 border border-gray-100">
+                <div class="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mb-6">
+                    <i class="fas fa-stethoscope text-2xl text-teal-600"></i>
                 </div>
-                <h3 class="text-xl font-semibold mb-2">Emergency Services</h3>
-                <p>Access emergency medical services quickly with our 24/7 available team of experts.</p>
+                <h3 class="text-xl font-semibold text-gray-800 mb-3">Preventive Care</h3>
+                <p class="text-gray-600 mb-4">Comprehensive health screenings and preventive services to help maintain
+                    your health and detect issues early.</p>
+                <ul class="space-y-2 mb-6">
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span class="text-gray-700">Annual physicals</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span class="text-gray-700">Cancer screenings</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span class="text-gray-700">Lifestyle consultations</span>
+                    </li>
+                </ul>
+
             </div>
         </div>
+
+
     </div>
 </section>
 {% endblock %}
