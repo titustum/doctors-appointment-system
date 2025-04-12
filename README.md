@@ -139,4 +139,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Contact
 
-If you have any questions or feedback, feel free to open an issue on the GitHub repository or contact the maintainers via email (tituskiptanuitum@gmail.com)
+If you have any questions or feedback, feel free to open an issue on the GitHub repository or contact the maintainers via email (mediconnect@gmail.com)

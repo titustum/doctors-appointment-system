@@ -225,8 +225,13 @@
                     </div>
                 </div>
 
-                <!-- Doctors Management Section -->
+
                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <canvas id="appointmentChart" class="h-[200px]"></canvas>
+                </div>
+
+                <!-- Doctors Management Section -->
+                <div class="bg-white mt-5 p-6 rounded-lg shadow-md">
                     <div class="flex justify-between items-center mb-6">
                         <h3 class="text-lg font-semibold text-gray-800">Manage Doctors</h3>
                         <button id="addDoctorBtn"
@@ -516,6 +521,60 @@
                 totalDoctorsElements[2].textContent = doctors.length;
             }
         }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        // Get the data passed from Flask
+        const appointmentData = {{ appointment_data | tojson }};
+
+        // Prepare the chart data
+        const labels = Object.keys(appointmentData); // Doctor names
+        const scheduledData = labels.map(doctor => appointmentData[doctor]['Scheduled']);
+        const completedData = labels.map(doctor => appointmentData[doctor]['Completed']);
+        const cancelledData = labels.map(doctor => appointmentData[doctor]['Cancelled']);
+
+        const ctx = document.getElementById('appointmentChart').getContext('2d');
+
+        // Create the chart
+        new Chart(ctx, {
+            type: 'bar',  // Change to 'pie', 'line', etc., based on your preferred chart type
+            data: {
+                labels: labels,  // Doctor names
+                datasets: [{
+                    label: 'Scheduled',
+                    data: scheduledData,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Completed',
+                    data: completedData,
+                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Cancelled',
+                    data: cancelledData,
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        enabled: true
+                    }
+                }
+            }
+        });
     </script>
 </body>
 

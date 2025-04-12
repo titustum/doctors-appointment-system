@@ -4,6 +4,7 @@ from random import random
 from flask import Flask, jsonify, render_template, session, url_for, request, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from sqlalchemy import func
 from werkzeug.utils import secure_filename
 
 # Initialize Flask app and database
@@ -12,6 +13,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///appointments.db'  # Use your 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOAD_FOLDER'] = 'static/uploads/'  # Folder to store images
 app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif', 'webp'}  # Allowed image extensions
+app.config['TEMPLATES_AUTO_RELOAD'] = True  # Automatically reload templates on change
 db = SQLAlchemy(app)
 
 # Flash messages setup
@@ -232,27 +234,34 @@ def login_required(f):
 @login_required
 def dashboard():
 
-    departments = Department.query.all()
+    appointment_counts = db.session.query(
+        Doctor.name,
+        Appointment.status,
+        func.count(Appointment.id)
+    ).join(Appointment, Doctor.id == Appointment.doctor_id) \
+        .group_by(Doctor.name, Appointment.status).all()
 
-    # Get total number of appointments
-    total_appointments = Appointment.query.count()
+    # Structure the data to pass to the frontend
+    appointment_data = {}
 
-    # Get total number of upcoming appointments (status 'Scheduled')
+    # Process the data
+    for doctor_name, status, count in appointment_counts:
+        if doctor_name not in appointment_data:
+            appointment_data[doctor_name] = {'Scheduled': 0, 'Completed': 0, 'Cancelled': 0}
+        appointment_data[doctor_name][status] = count
+
+    departments = Department.query.all() 
+    total_appointments = Appointment.query.count() 
     upcoming_appointments = Appointment.query.filter(Appointment.preferred_time > datetime.now(), Appointment.status == "Scheduled").count()
-
-    # Get total number of doctors
-    total_doctors = Doctor.query.count()
-
-    # Get the upcoming appointments (for displaying in the table)
+    total_doctors = Doctor.query.count() 
     upcoming_appointments_list = Appointment.query.filter(Appointment.preferred_time > datetime.now(), Appointment.status == "Scheduled").all()
-
-    # Render the dashboard template and pass the data
     return render_template('admin/dashboard.html', 
                            total_appointments=total_appointments,
                            upcoming_appointments=upcoming_appointments,
                            total_doctors=total_doctors,
                            upcoming_appointments_list=upcoming_appointments_list,
                            departments = departments,
+                           appointment_data=appointment_data,
                            user= User.query.get(session['user_id'])
                            )
 
